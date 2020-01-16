@@ -1,0 +1,490 @@
+/*Default Style*/
+
+/* Variables */
+@bg-color: #e5e5e5;
+@accent-color: #0054A6;
+@dom-color: #1d1d1d;
+@red-color: rgb(167, 0, 0);
+
+/*General Document Style*/
+html, body{
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10pt;
+    margin: 0;
+    padding: 0;
+    background-color: @bg-color;
+    overflow-x: hidden;
+}
+
+a{
+    text-decoration: none;
+    color: @accent-color;
+    cursor: pointer;
+}
+
+.modal a:hover{
+    text-decoration: underline;
+}
+
+.hidden{
+    display: none;
+}
+
+.inlineslide{
+    position: absolute;
+    display: inline-table;
+    width: 100vw;
+    z-index: 1;
+}
+
+*:focus {
+    outline-color: @accent-color;
+}
+
+textarea, input, select, select option{
+    font-family: 'Roboto', sans-serif;
+    padding: 4px;
+}
+
+select{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
+}
+
+textarea{
+    min-height: 80px;
+}
+
+/*Nav Bar Styles*/
+.navbar{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    background-color: @dom-color;
+    vertical-align: middle;
+    color: @accent-color;
+    min-height: 55px;
+    line-height: 55px;
+    font-size: 1.5rem;
+    box-shadow: 0px 0px 7px rgba(0, 0, 0, 0.75);
+    user-select: none;
+    white-space: nowrap;
+}
+
+.fa-bars{
+    vertical-align: middle;
+    line-height: 55px;
+    cursor: pointer;
+    margin-left: -2px;
+
+    transition: margin-left 0.3s ease;
+}
+
+.fa-user{
+    vertical-align: middle;
+    font-size: 2rem;
+}
+
+#logo{
+    height: 15.5px;
+    margin-right: -15px;
+}
+
+#accountbtn{
+    display: inline-block;
+    position: absolute;
+    line-height: 55px;
+    text-align: left;
+    right: 20px;
+    font-size: 1rem;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+#accountlabel{
+    display: inline-block;
+    max-width: 0px;
+    opacity: 0;
+
+    transition: max-width 0.2s ease, opacity 0.2s ease;
+}
+
+#accountbtn:hover #accountlabel{
+    opacity: 1;
+}
+
+.title{
+    margin-left: 15px;
+}
+
+.btn, input[type="submit"]{
+    font-family: inherit;
+    display: inline-block;
+    padding: 15px;
+    background-color: @accent-color;
+    color: #e5e5e5;
+    border-radius: 2px;
+    cursor: pointer;
+    margin: 5px;
+    user-select: none;
+    border: none;
+
+    transition: background-color 0.1s ease-in;
+}
+
+.btn:hover{
+    background-color: lighten(@accent-color, 5%);
+}
+
+.btn:active{
+    background-color: darken(@accent-color, 5%);  
+}
+
+/*Drawer Style*/
+.drawer{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px;
+    height: 100vh;
+    padding-top: 55px;
+    background-color: @dom-color;
+    box-shadow: 2px 0px 7px rgba(0, 0, 0, 0.75);
+    box-sizing: border-box;
+    z-index: 2;
+    animation-duration: 0.5s;
+}
+
+.drawercontents{
+    height: 100%;
+    overflow-y: auto;
+}
+
+.drawerlink{
+    display: block;
+    padding: 10px;
+    padding-left: 25px;
+    cursor: pointer;
+    color: #dadada;
+    font-size: 1.1rem;
+    text-decoration: none;
+}
+
+.drawerlink:hover{
+    background-color: lighten(@dom-color, 2%);
+}
+
+.drawerlink:active{
+    background-color: darken(@dom-color, 5%);
+    color: @accent-color;
+}
+
+/*Content Style*/
+.content{
+    margin-top: 55px;
+    box-sizing: border-box;
+}
+
+.required{
+    color: rgb(63, 148, 24);
+    font-weight: bold;
+}
+
+.customerinfo, .note, .notepadDiv{
+    padding: 10px;
+}
+
+.note{
+    background-color: @bg-color;
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+}
+
+/* Quote Filter */
+.quotefilter{
+    width: 200px;
+    color: #e5e5e5;
+    background-color: @dom-color;
+    padding: 12px;
+    margin-left: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    box-sizing: border-box;
+
+    transition: border-radius 0.1s ease;
+}
+
+.quotefilteractive{
+    border-radius: 5px 5px 0 0;
+}
+
+.quotefilter::after{
+    content: "\25BC";
+    float: right;
+    transition: transform 0.5s ease;
+}
+
+.quotefilteractive::after{
+    transform: rotateZ(180deg);
+}
+
+.quotedropdown{
+    width: 200px;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    max-height: 0px;
+    overflow: hidden;
+
+    transition: max-height 0.3s ease-in-out;
+}
+
+.filterbtn{
+    width: 100%;
+    background-color: lighten(@dom-color, 2%);
+    color: #e5e5e5;
+    padding: 12px;
+    box-sizing: border-box;
+}
+
+.filterbtn:hover{
+    background-color: lighten(@dom-color, 4%);
+}
+
+/*Tabs*/
+
+.tabs{
+    width: 100%;
+    background-color: darken(@bg-color, 5%);
+}
+
+.tab{
+    display: inline-block;
+    background-color: @dom-color;
+    color: @bg-color;
+    padding:10px;
+    padding-right: 20px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 2px;
+    text-align: left;
+    cursor: pointer;
+
+    transition: background-color 0.1s ease, color 0.1s ease;
+}
+
+.tab[data-selected=true]{
+    background-color: @bg-color;
+    color: @accent-color;
+    border-top: 2px solid @accent-color;
+    border-right: 2px solid @accent-color;
+}
+
+/* Notepad */
+.notepadDiv{
+    position: relative;
+    width: 85vw;
+}
+
+.notepad{
+    width: calc(100% - 20px);
+    height: 210px;
+    box-sizing: border-box;
+}
+
+.fs.notepad{
+    display: block;
+    position: fixed;
+    top: 55px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 110px);
+    resize: none;
+    font-size: 1.3em;
+}
+
+#suggestions{
+    position: fixed;
+    background-color: darken(@bg-color, 5%);
+    margin-top: 75px;
+    z-index: 99;
+    box-shadow: 0px 1px 2px rgba(0,0,0,0.5);
+    border-radius: 4px;
+}
+
+.suggestion{
+    padding: 10px;
+    font-family: 'Roboto', sans-serif;
+    cursor: pointer;
+}
+
+.suggestion:hover{
+    background-color: darken(@bg-color, 8%);
+}
+
+.fsbtn{
+    float: right;
+    vertical-align: text-bottom;
+    cursor: pointer;
+}
+
+.notemenu{
+    width: 100%;
+    background-color: darken(@bg-color, 5%);
+}
+
+.fsnotemenu{
+    width: 100%;
+    background-color: darken(@bg-color, 5%);
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+/* Toast Message */
+.toast{
+    width: 200px;
+    height: auto;
+    position: fixed;
+    top:0;
+    left: calc(50% - 100px);
+    z-index: 99;
+    background-color: rgb(214, 221, 120);
+    border-radius: 0 0 5px 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.75);
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+/* Modal */
+.overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.75);
+    z-index: 4;
+    animation-duration: 0.5s;
+}
+
+.modal{
+    width: 85vw;
+    height: 75vh;
+    margin: auto;
+    padding: 5px;
+    background-color: @bg-color;
+    animation-duration: inherit;
+    box-sizing: border-box;
+}
+
+.modaltitle{
+    width: 100vw;
+    text-align: center;
+    color: #e5e5e5;
+    margin-top: 55px;
+    animation-duration: inherit;
+}
+
+.modalclose{
+    display: block;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    font-size: 2.5em;
+    cursor: pointer;
+    color: #131313;
+    background-color: @bg-color;
+    width: 40px;
+    height: 40px;
+    box-sizing: border-box;
+    border-radius: 50px;
+    animation-duration: inherit;
+
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.modalclose:hover{
+    background-color: @red-color;
+    color: #e5e5e5;
+}
+
+/*Bind Log*/
+
+.logview{
+    width: 100%;
+    height: calc(100% - 80px);
+}
+
+.bindlog{
+    margin: auto;
+    padding: 5px;
+    border: none;
+    border-collapse: collapse;
+}
+
+.tableheader td{
+    padding: 5px 0 5px 5px;
+    font-size: 0.9em;
+    box-sizing: border-box;
+}
+
+.bindrow td{
+    margin: 0;
+    border: 0.5px solid black;
+    background-color: white;
+    padding: 5px;
+    font-family: 'Roboto', sans-serif
+}
+
+.bindrow .tablex{
+    background-color: transparent;
+    border: none;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.bindrow .tablex:hover{
+    color: @red-color;
+}
+
+/*Scrollbar Style*/
+::-webkit-scrollbar {
+    width: 2px;
+    height: 2px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #3b3b3b;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #0054A6;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #004395;
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+    border: .5px solid #0054A6;
+    background-color: #fff;
+    padding: 5px;
+}

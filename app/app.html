@@ -1,0 +1,69 @@
+<!doctype html>
+
+<html>
+<head>
+    <title>Aline Notebook</title>
+
+    <link rel="apple-touch-icon" sizes="57x57" href="/icons/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="/icons/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="/icons/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="/icons/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="/icons/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="/icons/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="/icons/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="/icons/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="/icons/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/icons/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="//iconsfavicon-16x16.png">
+
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="HandheldFriendly" content="true">
+
+    <script src="https://kit.fontawesome.com/bdac9266a3.js" crossorigin="anonymous"></script>
+
+    <!--styles-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto|Roboto+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+    <link rel="stylesheet/less" type="text/css" href="style/default.less">
+    <link rel="stylesheet/less" type="text/css" href="style/splash.less">
+    <link href="/lib/datepicker.css" rel="stylesheet">
+    
+    
+    <!--scripts-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js" integrity="sha256-1A78rJEdiWTzco6qdn3igTBv9VupN3Q1ozZNTR4WE/Y=" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9.5.4/dist/sweetalert2.all.min.js"></script>
+    <script src="/lib/luxon.js"></script>
+    <script src="/lib/datepicker.js"></script>
+    <script src="/lib/jquery.circlechart.js"></script>
+    <script src="/lib/textarea-helper.js"></script>
+
+    <script type="module" src="/scripts/main.js"></script>
+</head>
+<body>
+    <div class="navbar">
+        <i class="fas fa-bars fa-lg" onclick="func.toggleDrawer()"></i> 
+        <img id="logo" src="images/logo/aline.png"/>
+        <span class="title">Notebook</span>
+        <a id="accountbtn"><i class="fas fa-user"></i><span id="accountlabel">Login</span></a>
+    </div>
+    <div class="drawer hidden">
+        <div class="drawercontents">
+		</div>
+    </div>
+    <div class="content">
+    </div>
+    <div class="splash">
+        <div class="logo">
+            <img id="logo-a" src="images/logo/a.png"/>
+            <img id="logo-l" src="images/logo/l.png"/>
+            <img id="logo-ine" src="images/logo/ine.png"/>
+            <div id="logo-notebook">Notebook</div>
+        </div>
+    </div>
+</body>
+</html>

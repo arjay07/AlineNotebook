@@ -1,0 +1,984 @@
+{
+    "components": [
+        {
+            "label": "Control #",
+            "id": "controlnumber",
+            "type": "string",
+            "required": true
+        },
+        {
+            "label": "Policy #",
+            "id": "policynumber",
+            "type": "string"
+        },
+        {
+            "label": "Effective Date",
+            "id": "effectivedate",
+            "type": "date",
+            "required": true
+        },
+        {
+            "label": "Closing Date",
+            "id": "closingdate",
+            "type": "date"
+        },
+        {
+            "label": "Declared Prior",
+            "id": "declaredprior",
+            "type": "select",
+            "options": [
+                {
+                    "label": "No"
+                },
+                {
+                    "label": "Yes"
+                }
+            ]
+        },
+        {
+            "label": "No Need?",
+            "id": "noneed",
+            "type": "select",
+            "options": [
+                {
+                    "label": "--",
+                    "value": ""
+                },
+                {
+                    "label": "Did Not Own"
+                },
+                {
+                    "label": "Military"
+                },
+                {
+                    "label": "Other"
+                }
+            ]
+        },
+        {
+            "label": "PQB Modified?",
+            "id": "pqbmodified",
+            "type": "select",
+            "options": [
+                {
+                    "label": "No"
+                },
+                {
+                    "label": "Yes"
+                }
+            ],
+            "required": true
+        },
+        {
+            "label": "# of Vehicles",
+            "id": "vehicles",
+            "type": "number",
+            "listeners": [
+                {
+                    "on": "change",
+                    "func": "func.updateVehicles()"
+                }
+            ]
+        },
+        {
+            "label": "Bodily Injury",
+            "id": "bilimits",
+            "type": "string",
+            "placeholder": "100/300"
+        },
+        {
+            "label": "Watercraft Liability",
+            "id": "watercraftliability",
+            "type": "string"
+        },
+        {
+            "label": "Property Damage",
+            "id": "pdlimits",
+            "type": "string",
+            "placeholder": "100"
+        },
+        {
+            "label": "Collision",
+            "id": "collision",
+            "type": "string",
+            "placeholder": "Deductible"
+        },
+        {
+            "label": "Comprehensive",
+            "id": "comprehensive",
+            "type": "string",
+            "placeholder": "Deductible"
+        },
+        {
+            "label": "Carco",
+            "id": "carco",
+            "type": "select",
+            "options": [
+                {
+                    "label": "--",
+                    "value": ""
+                },
+                {
+                    "label": "Yes"
+                },
+                {
+                    "label": "No"
+                }
+            ]
+        },
+        {
+            "label": "No Prior?",
+            "id": "noprior",
+            "type": "select",
+            "options": [
+                {
+                    "label": "--",
+                    "value": ""
+                },
+                {
+                    "label": "Did not own"
+                }
+            ]
+        },
+        {
+            "label": "Rejected Coverage",
+            "id": "rejected",
+            "type": "textarea",
+            "placeholder": "(Roadside Assistance, Rental Reimbursement, etc...)",
+            "required": true
+        },
+        {
+            "label": "Quoted Price",
+            "id": "quotedprice",
+            "type": "number",
+            "required": true
+        },
+        {
+            "label": "Down Payment",
+            "id": "downpayment",
+            "type": "number"
+        },
+        {
+            "label": "Declined Bind, Why?",
+            "id": "declinedbind",
+            "type": "select",
+            "options": [
+                {
+                    "label": "--",
+                    "value": ""
+                },
+                {
+                    "label": "Not interested"
+                },
+                {
+                    "label": "Wants callback"
+                },
+                {
+                    "label": "Premium is too high"
+                },
+                {
+                    "label": "Wants to think about it"
+                },
+                {
+                    "label": "Wants to speak with spouse"
+                },
+                {
+                    "label": "Does not qualify"
+                },
+                {
+                    "label": "No prior insurance"
+                },
+                {
+                    "label": "Referred to agent"
+                }
+            ],
+            "required": true
+        },
+        {
+            "label": "Reference #",
+            "id": "refnumber",
+            "type": "number"
+        },
+        {
+            "label": "Documents Received",
+            "id": "docsreceived",
+            "type": "textarea"
+        },
+        {
+            "label": "Payment Method",
+            "id": "paymethod",
+            "type": "select",
+            "options": [
+                {
+                    "label": "--",
+                    "value": ""
+                },
+                {
+                    "label": "Electronic Check"
+                },
+                {
+                    "label": "Credit/Debit Card"
+                },
+                {
+                    "label": "Mortgage Pay"
+                },
+                {
+                    "label": "C.O.D"
+                }
+            ]
+        },
+        {
+            "label": "Informed of T-Docs",
+            "id": "informedoftdocs",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Yes"
+                },
+                {
+                    "label": "No"
+                }
+            ],
+            "required": true
+        },
+        {
+            "label": "E-Sign",
+            "id": "esign",
+            "type": "select",
+            "options": [
+                {
+                    "label": "Opt-In"
+                },
+                {
+                    "label": "Opt-Out"
+                }
+            ]
+        },
+        {
+            "label": "Personal Property",
+            "id": "personalproperty",
+            "type": "number"
+        },
+        {
+            "label": "Dwelling",
+            "id": "dwelling",
+            "type": "number"
+        },
+        {
+            "label": "Deductible",
+            "id": "deductible",
+            "type": "number"
+        },
+        {
+            "label": "Auto Bodily Injury",
+            "id": "pup_bilimits",
+            "type": "string",
+            "placeholder": "250/500"
+        },
+        {
+            "label": "Auto Property Damage",
+            "id": "pup_pdlimits",
+            "type": "string",
+            "placeholder": "100"
+        },
+        {
+            "label": "Property Liability",
+            "id": "pup_propertyliability",
+            "type": "string",
+            "placeholder": "300"
+        },
+        {
+            "label": "Underlying Limits Modified?",
+            "id": "pup_limitsmodified",
+            "type": "select",
+            "options": [
+                {
+                    "label": "No"
+                },
+                {
+                    "label": "Yes"
+                }
+            ],
+            "required": true
+        },
+        {
+            "label": "New Auto Premium",
+            "id": "newautopremium",
+            "type": "number",
+            "contingent": {
+                "component":"pup_limitsmodified",
+                "value":"Yes"
+            }
+        },
+        {
+            "label": "New Property Premium",
+            "id": "newpropertypremium",
+            "type": "number",
+            "contingent": {
+                "component":"pup_limitsmodified",
+                "value":"Yes"
+            }
+        }
+    ],
+    "layout": [
+        {
+            "label": "Auto",
+            "type": "auto",
+            "sections": [
+                {
+                    "label": "General",
+                    "table": [
+                        [
+                            "controlnumber"
+                        ],
+                        [
+                            "policynumber"
+                        ],
+                        [
+                            "effectivedate",
+                            "declaredprior"
+                        ],
+                        [
+                            "noneed",
+                            "pqbmodified"
+                        ],
+                        [
+                            "vehicles"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Coverage",
+                    "table": [
+                        [
+                            "bilimits"
+                        ],
+                        [
+                            "pdlimits"
+                        ],
+                        [
+                            "collision"
+                        ],
+                        [
+                            "comprehensive",
+                            "carco"
+                        ],
+                        [
+                            "rejected"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Payment",
+                    "table": [
+                        [
+                            "quotedprice",
+                            "declinedbind"
+                        ],
+                        [
+                            "downpayment",
+                            "paymethod"
+                        ],
+                        [
+                            "refnumber"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Documents",
+                    "table": [
+                        [
+                            "docsreceived",
+                            "informedoftdocs"
+                        ],
+                        [
+                            "esign"
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Motorcycle",
+            "type": "motorcycle",
+            "sections": [
+                {
+                    "label": "General",
+                    "table": [
+                        [
+                            "controlnumber"
+                        ],
+                        [
+                            "policynumber"
+                        ],
+                        [
+                            "effectivedate",
+                            "declaredprior"
+                        ],
+                        [
+                            "noneed",
+                            "pqbmodified"
+                        ],
+                        [
+                            "vehicles"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Coverage",
+                    "table": [
+                        [
+                            "bilimits"
+                        ],
+                        [
+                            "pdlimits"
+                        ],
+                        [
+                            "collision"
+                        ],
+                        [
+                            "comprehensive"
+                        ],
+                        [
+                            "rejected"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Payment",
+                    "table": [
+                        [
+                            "quotedprice",
+                            "declinedbind"
+                        ],
+                        [
+                            "downpayment",
+                            "paymethod"
+                        ],
+                        [
+                            "refnumber"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Documents",
+                    "table": [
+                        [
+                            "docsreceived",
+                            "informedoftdocs"
+                        ],
+                        [
+                            "esign"
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "ORV",
+            "type": "orv",
+            "sections": [
+                {
+                    "label": "General",
+                    "table": [
+                        [
+                            "controlnumber"
+                        ],
+                        [
+                            "policynumber"
+                        ],
+                        [
+                            "effectivedate",
+                            "declaredprior"
+                        ],
+                        [
+                            "noneed",
+                            "pqbmodified"
+                        ],
+                        [
+                            "vehicles"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Coverage",
+                    "table": [
+                        [
+                            "bilimits"
+                        ],
+                        [
+                            "pdlimits"
+                        ],
+                        [
+                            "collision"
+                        ],
+                        [
+                            "comprehensive"
+                        ],
+                        [
+                            "rejected"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Payment",
+                    "table": [
+                        [
+                            "quotedprice",
+                            "declinedbind"
+                        ],
+                        [
+                            "downpayment",
+                            "paymethod"
+                        ],
+                        [
+                            "refnumber"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Documents",
+                    "table": [
+                        [
+                            "docsreceived",
+                            "informedoftdocs"
+                        ],
+                        [
+                            "esign"
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Boat",
+            "type": "boat",
+            "sections": [
+                {
+                    "label": "General",
+                    "table": [
+                        [
+                            "controlnumber"
+                        ],
+                        [
+                            "policynumber"
+                        ],
+                        [
+                            "effectivedate",
+                            "declaredprior"
+                        ],
+                        [
+                            "noneed",
+                            "pqbmodified"
+                        ],
+                        [
+                            "vehicles"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Coverage",
+                    "table": [
+                        [
+                            "watercraftliability"
+                        ],
+                        [
+                            "pdlimits"
+                        ],
+                        [
+                            "collision"
+                        ],
+                        [
+                            "comprehensive"
+                        ],
+                        [
+                            "rejected"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Payment",
+                    "table": [
+                        [
+                            "quotedprice",
+                            "declinedbind"
+                        ],
+                        [
+                            "downpayment",
+                            "paymethod"
+                        ],
+                        [
+                            "refnumber"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Documents",
+                    "table": [
+                        [
+                            "docsreceived",
+                            "informedoftdocs"
+                        ],
+                        [
+                            "esign"
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Homeowners",
+            "type": "homeowners",
+            "sections": [
+                {
+                    "label": "General",
+                    "table": [
+                        [
+                            "controlnumber"
+                        ],
+                        [
+                            "policynumber"
+                        ],
+                        [
+                            "effectivedate",
+                            "closingdate"
+                        ],
+                        [
+                            "noprior",
+                            "pqbmodified"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Coverage",
+                    "table": [
+                        [
+                            "dwelling"
+                        ],
+                        [
+                            "deductible"
+                        ],
+                        [
+                            "rejected"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Payment",
+                    "table": [
+                        [
+                            "quotedprice",
+                            "declinedbind"
+                        ],
+                        [
+                            "downpayment",
+                            "paymethod"
+                        ],
+                        [
+                            "refnumber"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Documents",
+                    "table": [
+                        [
+                            "docsreceived",
+                            "informedoftdocs"
+                        ],
+                        [
+                            "esign"
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Renters",
+            "type": "renters",
+            "sections": [
+                {
+                    "label": "General",
+                    "table": [
+                        [
+                            "controlnumber"
+                        ],
+                        [
+                            "policynumber"
+                        ],
+                        [
+                            "effectivedate"
+                        ],
+                        [
+                            "noprior",
+                            "pqbmodified"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Coverage",
+                    "table": [
+                        [
+                            "personalproperty"
+                        ],
+                        [
+                            "deductible"
+                        ],
+                        [
+                            "rejected"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Payment",
+                    "table": [
+                        [
+                            "quotedprice",
+                            "declinedbind"
+                        ],
+                        [
+                            "downpayment",
+                            "paymethod"
+                        ],
+                        [
+                            "refnumber"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Documents",
+                    "table": [
+                        [
+                            "docsreceived",
+                            "informedoftdocs"
+                        ],
+                        [
+                            "esign"
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Condo",
+            "type": "condo",
+            "sections": [
+                {
+                    "label": "General",
+                    "table": [
+                        [
+                            "controlnumber"
+                        ],
+                        [
+                            "policynumber"
+                        ],
+                        [
+                            "effectivedate"
+                        ],
+                        [
+                            "noprior",
+                            "pqbmodified"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Coverage",
+                    "table": [
+                        [
+                            "personalproperty"
+                        ],
+                        [
+                            "deductible"
+                        ],
+                        [
+                            "rejected"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Payment",
+                    "table": [
+                        [
+                            "quotedprice",
+                            "declinedbind"
+                        ],
+                        [
+                            "downpayment",
+                            "paymethod"
+                        ],
+                        [
+                            "refnumber"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Documents",
+                    "table": [
+                        [
+                            "docsreceived",
+                            "informedoftdocs"
+                        ],
+                        [
+                            "esign"
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "Motor Home",
+            "type": "motorhome",
+            "sections": [
+                {
+                    "label": "General",
+                    "table": [
+                        [
+                            "controlnumber"
+                        ],
+                        [
+                            "policynumber"
+                        ],
+                        [
+                            "effectivedate",
+                            "declaredprior"
+                        ],
+                        [
+                            "noneed",
+                            "pqbmodified"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Coverage",
+                    "table": [
+                        [
+                            "bilimits"
+                        ],
+                        [
+                            "pdlimits"
+                        ],
+                        [
+                            "collision"
+                        ],
+                        [
+                            "comprehensive"
+                        ],
+                        [
+                            "rejected"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Payment",
+                    "table": [
+                        [
+                            "quotedprice",
+                            "declinedbind"
+                        ],
+                        [
+                            "downpayment",
+                            "paymethod"
+                        ],
+                        [
+                            "refnumber"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Documents",
+                    "table": [
+                        [
+                            "docsreceived",
+                            "informedoftdocs"
+                        ],
+                        [
+                            "esign"
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "PUP",
+            "type": "pup",
+            "sections": [
+                {
+                    "label": "General",
+                    "table": [
+                        [
+                            "controlnumber"
+                        ],
+                        [
+                            "policynumber"
+                        ],
+                        [
+                            "effectivedate",
+                            "declaredprior"
+                        ],
+                        [
+                            "noneed",
+                            "pqbmodified"
+                        ],
+                        [
+                            "vehicles"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Coverage",
+                    "table": [
+                        [
+                            "pup_bilimits"
+                        ],
+                        [
+                            "pup_pdlimits"
+                        ],
+                        [
+                            "pup_propertyliability"
+                        ],
+                        [
+                            "pup_limitsmodified"
+                        ],
+                        [
+                            "newautopremium"
+                        ],
+                        [
+                            "newpropertypremium"
+                        ],
+                        [
+                            "rejected"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Payment",
+                    "table": [
+                        [
+                            "quotedprice",
+                            "declinedbind"
+                        ],
+                        [
+                            "downpayment",
+                            "paymethod"
+                        ],
+                        [
+                            "refnumber"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Documents",
+                    "table": [
+                        [
+                            "docsreceived",
+                            "informedoftdocs"
+                        ],
+                        [
+                            "esign"
+                        ]
+                    ]
+                }
+            ]
+        }
+    ]
+}

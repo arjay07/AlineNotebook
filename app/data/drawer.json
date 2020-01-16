@@ -1,0 +1,19 @@
+[
+    {
+        "name":"About",
+        "items":[
+            {
+                "name":"Contact",
+                "onclick":"func.openModal(\"contact\")"
+            },
+            {
+                "name":"Changelog",
+                "onclick":"func.openModal(\"changelog\")"
+            },
+            {
+                "name":"Settings",
+                "onclick":"func.openModal(\"settings\")"
+            }
+        ]
+    }
+]

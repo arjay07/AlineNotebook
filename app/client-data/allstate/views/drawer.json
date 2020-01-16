@@ -1,0 +1,36 @@
+[
+    {
+        "name": "Quick Links",
+        "items": [
+            {
+                "name":"AllConnect",
+                "url":"https://home.allstate.com/" 
+            },
+            {
+                "name":"CVR",
+                "url":"https://www.dmvlink.com/"
+            },
+            {
+                "name":"Right Answers",
+                "url":"https://allstate.rightanswers.com/portal/sa/"
+            },
+            {
+                "name":"Talent Connection",
+                "url":"https://agtacc.allstate.com/FIM/sps/successfactors_ag/saml20/logininitial?RequestBinding=HTTPPost&NameIdFormat=email&PartnerId=https://www.successfactors.com"
+            },
+            {
+                "name":"Vindicator",
+                "url":"http://www.iihs-hldi.org/vinDirect.asp?ccr=WOA4G4K0K4H2"
+            }
+        ]
+    },
+    {
+        "name": "Tools",
+        "items": [
+            {
+                "name":"Bind Log",
+                "onclick":"func.openApp(\"BindLog\")"
+            }
+        ]
+    }
+]

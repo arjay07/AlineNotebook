@@ -1,0 +1,115 @@
+.logo img{
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 356px;
+    margin: 0 auto;
+    user-select: none;
+    padding: 0;
+}
+
+.logo #logo-notebook{
+    position: absolute;
+    top: 150px;
+    left: 100px;
+    font-size: 2.5em;
+    text-align: center;
+}
+
+.logo{
+    position: relative;
+    top: 50%;
+    left: 0;
+    width: 356px;
+    margin: auto;
+    margin-top: -150px;
+}
+
+.splash{
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #1d1d1d;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+    color: #0054A6;
+}
+
+@keyframes aline-ine {
+  from {
+    transform: translate3d(-20%, 0, 0);
+    opacity: 0;
+  }
+
+  5%{
+      opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+.aline-ine {
+  animation-name: aline-ine;
+}
+
+@keyframes aline-a {
+  from {
+    top: -50px;
+    left: 20px;
+    transform: rotate(-40deg);
+    opacity: 0;
+  }
+
+  5%{
+      opacity: 0;
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+    opacity: 1;
+  }
+}
+
+.aline-a {
+  animation-name: aline-a;
+}
+
+@keyframes aline-l {
+  from {
+    transform: scaleX(0) rotate(90deg);
+    top: 74px;
+  }
+
+  75% {
+      transform: scaleX(1.5) rotate(90deg);
+      top: 74px;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+.aline-l {
+  animation-name: aline-l;
+  animation-duration: 2s;
+}
+
+@keyframes disappear {
+    from{
+        background-color: #1d1d1d;
+    }
+
+    to{
+        background-color: #0054A6;
+    }
+}
+
+.disappear{
+    animation-name: disappear;
+}
