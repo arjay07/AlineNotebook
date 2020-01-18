@@ -1,7 +1,7 @@
 /* global $, Swal */
 
-import { API } from "../api.js";
-import { views } from "../views.js";
+import { API } from "../modules/api.js";
+import { views } from "../modules/views.js";
 import { BindLogApp } from "./bindlogapp.js"
 
 // Apps

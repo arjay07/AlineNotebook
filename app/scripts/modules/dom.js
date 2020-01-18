@@ -4,7 +4,7 @@ import {views} from "./views.js"
 import {API} from "./api.js"
 import {Modal} from "./modal.js"
 import {BindLog, Bind} from "./bindlog.js" 
-import { Apps } from "./apps/apps.js"
+import { Apps } from "../apps/apps.js"
 
 const func = {};
 

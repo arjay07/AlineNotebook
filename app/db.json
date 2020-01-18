@@ -5,6 +5,18 @@
       "email": "arjay.07.ly@gmail.com",
       "username": "arjay07",
       "password": "$2a$10$tGLOgx1PDlapHXIhf1sGSev/T/TqPRu53s8F4/3sJXEmfKjQaoOOW"
+    },
+    {
+      "name": "Peter Flores",
+      "email": "pflot@allstate.com",
+      "username": "pflot",
+      "password": "$2a$10$0B./F64e.OPSUpdzfkFun..i9dIpX5kT.UusM8bKzZSLVWe9N7GgC"
+    },
+    {
+      "name": "Nick Gull",
+      "email": "ngulm@allstate.com",
+      "username": "ngull",
+      "password": "$2a$10$dkUUlkwxc8PO3K3oGLLuwu4u616bOETQDlIFRKyjIe2mhV.ei7zhG"
     }
   ]
 }

@@ -1,8 +1,8 @@
 /* global $, Swal, luxon */
 
 // Bind Log App\
-import { Modal } from "../modal.js"
-import { BindLog, Bind } from "../bindlog.js"
+import { Modal } from "../modules/modal.js"
+import { BindLog, Bind } from "../modules/bindlog.js"
 const DateTime = luxon.DateTime;
 
 const dateFormat = {month: "2-digit", day: "2-digit", year: "numeric"};
@@ -129,6 +129,9 @@ BindLogApp.open = () => {
     filterSelect.val("All");
     
     menu.append($("<strong>Filter: </strong>"), filterSelect, itemsView, bundlesView);
+    menu.css({
+        padding: 5
+    });
     
     addBtn.click(function(i){
         var bind = new Bind("", "", "", 1, "", "");
@@ -140,20 +143,29 @@ BindLogApp.open = () => {
     });
     
     saveBtn.click(function(i){
-        if(filterSelect.val()!="All"){
-            filterSelect.val("All");
-            filterSelect.trigger("change");
-        }
-        var bl = getBindLogFrom(logview.children(".bindlog").first());
-        BindLog.overwrite(bl);
         Swal.fire({
-            text: "Saved bind log!",
-            icon: "success",
-            showConfirmButton: false,
-            timer: 1200
+            title: "Are you sure?",
+            text: "This will overwrite your current bind log.",
+            icon: "question",
+            showCancelButton: true
+        }).then((willDelete) => {
+            if(willDelete.value){
+                if(filterSelect.val()!="All"){
+                    filterSelect.val("All");
+                    filterSelect.trigger("change");
+                }
+                var bl = getBindLogFrom(logview.children(".bindlog").first());
+                BindLog.overwrite(bl);
+                Swal.fire({
+                    text: "Saved bind log!",
+                    icon: "success",
+                    showConfirmButton: false,
+                    timer: 1200
+                });
+                
+                updateStatsView(bl, itemsView, bundlesView);
+            }
         });
-        
-        updateStatsView(bl, itemsView, bundlesView);
     });
     
     var dialog = new Modal("Bind Log", {
@@ -206,9 +218,10 @@ function addBindRow(table, bind){
                 title: "Are you sure?",
                 text: "You will delete this bind. This action cannot be undone.",
                 icon: "warning",
-                showCancelButton: true
+                showCancelButton: true,
+                cancelButtonColor: '#d33'
             }).then((willDelete) => {
-                if(willDelete){
+                if(willDelete.value){
                     BindLog.remove(bind);
                     bindrow.remove();
                     updateStatsView(BindLog.get(),$("#itemsview"),$("#bundlesview"));

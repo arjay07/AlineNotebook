@@ -1,5 +1,5 @@
 {
-  "name": "runner",
+  "name": "aline-notebook",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -18,5 +18,7 @@
     "jquery": "^3.4.1",
     "lowdb": "^1.0.0",
     "modules": "^0.4.0"
-  }
+  },
+  "author": "Leandro Yabut",
+  "license": "MIT"
 }

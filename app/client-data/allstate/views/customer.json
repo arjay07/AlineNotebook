@@ -303,12 +303,6 @@
                     ["email"]
                 ],
                 [
-                    ["address"]
-                ],
-                [
-                    ["city", "state", "zipcode"]
-                ],
-                [
                     ["authenticated", "verified", "facta"]
                 ]
             ]

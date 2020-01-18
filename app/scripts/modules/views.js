@@ -7,6 +7,7 @@ import { func } from "./dom.js";
 import { Note } from "./note.js";
 import { Modal } from "./modal.js";
 import { BindLog } from "./bindlog.js"
+import { Callbacks, Callback } from "./callback.js"
 var DateTime = luxon.DateTime;
 
 const views = {};
@@ -459,7 +460,14 @@ views.loadNoteMenu = () => {
             var customer = new Note.Customer(notes).gatherInfo();
             views.openNotePreview(customer);
         } else {
-            func.toastMessage("No notes filled out.");
+            Swal.fire({
+                position: "bottom-end",
+                icon: "warning",
+                text: "No notes filled out!",
+                toast: true,
+                showConfirmButton: false,
+                timer: 1500
+            });
         }
     });
 
@@ -469,32 +477,30 @@ views.loadNoteMenu = () => {
             text: "Your notes cannot be recovered.",
             icon: "warning",
             showCancelButton: true,
+            cancelButtonColor: '#d33'
         })
-            .then((willDelete) => {
-                if (willDelete) {
-
+            .then(willDelete => {
+                if (willDelete.value) {
                     $("[data-input='true']").each(
-                    function(i) {
-                        var e = $(this);
-                        if (e.attr("type") == "checkbox") {
-                            e.prop("checked", false);
-                        } else if (e.data("date") == true) {
-                            e.val(DateTime.local().toLocaleString(DateTime.DATE_SHORT));
-                        } else if (e.is("select")) {
-                            e.find('option:eq(0)').prop('selected', true);
-                        } else {
-                            e.val("");
+                        function(i) {
+                            var e = $(this);
+                            if (e.attr("type") == "checkbox") {
+                                e.prop("checked", false);
+                            } else if (e.data("date") == true) {
+                                e.val(DateTime.local().toLocaleString(DateTime.DATE_SHORT));
+                            } else if (e.is("select")) {
+                                e.find('option:eq(0)').prop('selected', true);
+                            } else {
+                                e.val("");
+                            }
                         }
-                    }
-                );
-                
-                Swal.fire({
-                    text: "Notes successfully reset!",
-                    icon: "success",
-                    timer: 1000,
-                    showConfirmButton: false
-                });
-                    
+                    );
+                    Swal.fire({
+                        text: "Notes successfully reset!",
+                        icon: "success",
+                        timer: 1000,
+                        showConfirmButton: false
+                    });
                 }
             });
     });
