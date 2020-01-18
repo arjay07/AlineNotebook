@@ -12,7 +12,6 @@ const FileSync = require('lowdb/adapters/FileSync');
 const session = require("express-session");
 
 const app = express();
-const port = 8080;
 const address = "18.219.220.245";
 
 const clientName="allstate";
@@ -249,6 +248,8 @@ app.post("/db", function(req, res){
 app.post("/session", function(req, res){
     res.json(req.session);
 });
+
+var port = process.env.port;
 
 // Start App
 app.listen(port, function(){
