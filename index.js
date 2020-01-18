@@ -249,9 +249,13 @@ app.post("/session", function(req, res){
     res.json(req.session);
 });
 
-var port = process.env.port;
+var port = process.env.PORT;
+
+if(!process.env.PORT){
+    port = 8080;
+}
 
 // Start App
 app.listen(port, function(){
-    console.log("Running app at http://" + address + ":" + port + "/...");
+    console.log("Running app at port:" + port + "...");
 });

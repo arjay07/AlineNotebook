@@ -7,8 +7,7 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "author": "Leandro Yabut",
   "license": "ISC",
   "dependencies": {
     "app": "^0.1.0",
@@ -19,7 +18,5 @@
     "jquery": "^3.4.1",
     "lowdb": "^1.0.0",
     "modules": "^0.4.0"
-  },
-  "author": "Leandro Yabut",
-  "license": "MIT"
+  }
 }
