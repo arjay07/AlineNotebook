@@ -23,35 +23,37 @@ var goals={};
 views.selectedQuote = "auto";
 
 views.startSplash = (data) => {
-    var a = $("#logo-a");
-    var l = $("#logo-l");
-    var ine = $("#logo-ine");
-    var notebook = $("#logo-notebook");
-    var splash = $(".splash");
-
-    a.add(ine).add(notebook).css("display", "none");
-
-    if (!data.loggedin) {
-        l.animateCSS("aline-l",
-            function() {
-                a.add(ine).css("display", "block");
-                a.animateCSS("aline-a");
-                ine.animateCSS("aline-ine", function() {
-                    notebook.css("display", "block");
-                    notebook.animateCSS("flipInX", function() {
-                        setTimeout(function() {
-                            splash.animate({
-                                opacity: 0
-                            }, 300, function() {
-                                splash.remove();
-                            });
-                        }, 1000);
+    $(".splash").load("/views/splash.html", function(){
+        var a = $("#logo-a");
+        var l = $("#logo-l");
+        var ine = $("#logo-ine");
+        var notebook = $("#logo-notebook");
+        var splash = $(".splash");
+    
+        a.add(ine).add(notebook).css("display", "none");
+    
+        if (!data.loggedin) {
+            l.animateCSS("aline-l",
+                function() {
+                    a.add(ine).css("display", "block");
+                    a.animateCSS("aline-a");
+                    ine.animateCSS("aline-ine", function() {
+                        notebook.css("display", "block");
+                        notebook.animateCSS("flipInX", function() {
+                            setTimeout(function() {
+                                splash.animate({
+                                    opacity: 0
+                                }, 300, function() {
+                                    splash.remove();
+                                });
+                            }, 1000);
+                        });
                     });
                 });
-            });
-    } else {
-        splash.remove();
-    }
+        } else {
+            splash.remove();
+        }
+    });
 }
 
 views.displayUser = (data) => {

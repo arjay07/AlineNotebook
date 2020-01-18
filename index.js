@@ -45,18 +45,32 @@ app.get("/",function(req, res){
 
 // Login/Logout Route
 app.post('/login', function(req, res) {
-    var username = req.body.username;
-    var password = req.body.password;
-
-    var auth=authenticate(username, password);
-
-    if(auth.authenticated()){
-        req.session.loggedin=true;
-        req.session.user=auth.user;
-        if(eagleEye)console.log(req.session.user.username + " logged in.");
+    if(req.body.username&&req.body.password){
+        var username = req.body.username;
+        var password = req.body.password;
+    
+        var auth=authenticate(username, password);
+    
+        if(auth.authenticated()){
+            req.session.loggedin=true;
+            req.session.user=auth.user;
+            if(eagleEye)console.log(req.session.user.username + " logged in.");
+            res.redirect("/");
+        }else{
+            req.session.errorMessage="Invalid username or password.";
+            res.redirect("/login");
+        }
+    }else{
+        req.session.errorMessage="Please enter a username and password.";
+        res.redirect("/login");
     }
+});
 
-    res.redirect("/");
+app.get("/login", function(req, res){
+    if(!req.session.loggedin)
+        res.sendFile(path.join(__dirname,"app","login.html"));
+    else
+        res.redirect("/");
 });
 
 app.get("/logout", function(req, res){
@@ -83,7 +97,6 @@ app.post("/register",function(req,res){
     }
     
     res.redirect("/");
-
 });
 
 function registerAccount(name, email, username, password){
@@ -111,7 +124,13 @@ function authenticate(username, password){
         u => u.username == query.username
     )[0];
 
-    return {authenticated: () => bcrypt.compareSync(query.password, user.password), user: user};
+    return {
+        authenticated: function(){
+            if(user)return bcrypt.compareSync(query.password, user.password);
+            else return false;
+        }, 
+        user: user
+    };
     
 }
 
