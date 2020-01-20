@@ -283,17 +283,18 @@ views.saveValues = ()=> {
 views.loadValues = () => {
     var values = store.get("saved");
     
-    values.forEach(value => {
-        var id = value.id;
-        var val = value.value;
-        var parent = value.parent;
-        
-        if(parent){
-            $(`.note[data-type="${parent}"] [data-input][data-id="${id}"]`).val(val);
-        }else{
-            $(`.customerinfo [data-input][data-id="${id}"]`).val(val);
-        }
-    });
+    if(values)
+        values.forEach(value => {
+            var id = value.id;
+            var val = value.value;
+            var parent = value.parent;
+            
+            if(parent){
+                $(`.note[data-type="${parent}"] [data-input][data-id="${id}"]`).val(val);
+            }else{
+                $(`.customerinfo [data-input][data-id="${id}"]`).val(val);
+            }
+        });
 }
 
 views.addContingent = (type, inputcell, labelcell, component, value) => {
