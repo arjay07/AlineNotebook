@@ -225,7 +225,6 @@ views.loadView = (data, viewClass, parent) => {
                                 sendBtn.click(function(){
                                     window.open("mailto:"+input.val()+encodeURI("?subject=Allstate POI [encrypted]"));
                                 });
-                                inputcell.append(input);
                                 break;
                         }
 
@@ -238,9 +237,10 @@ views.loadView = (data, viewClass, parent) => {
                         input.attr("data-note-type", e.type);
                         if (c.id) input.attr("data-id", c.id);
                         if (c.placeholder) input.attr("placeholder", c.placeholder);
+                        
                         row.append(labelcell);
                         if (c.style) input.css(c.style);
-                        if (c.type != "checkbox" || c.type != "email") {
+                        if (c.type != "checkbox") {
                             inputcell.append(input);
                             row.append(inputcell);
                         }
