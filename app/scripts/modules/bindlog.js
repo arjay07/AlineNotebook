@@ -23,6 +23,7 @@ BindLog.load = () => {
         BindLog.bindlog = data;
         BindLog.loaded = true;
     }, false);
+    bl.sort((a,b) => {return DateTime.fromFormat(a.date, "MM/dd/yyyy")-DateTime.fromFormat(b.date, "MM/dd/yyyy")});
     return bl;
 }
 
@@ -147,9 +148,9 @@ BindLog.addFromCustomer = (customer, onsuccess,onerror) => {
         });
 }
 
-function Bind(name, controlnumber, premium, items, policynumber, referencenumber){
+function Bind(name, controlnumber, premium, items, policynumber, referencenumber, date){
     
-    this.date = DateTime.local().toLocaleString({month:"2-digit", day:"2-digit", year:"numeric"});
+    this.date = date||DateTime.local().toLocaleString({month:"2-digit", day:"2-digit", year:"numeric"});
     this.name = name;
     this.controlnumber = controlnumber;
     this.premium = premium;

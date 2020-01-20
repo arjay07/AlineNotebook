@@ -1,3 +1,5 @@
+/* global $, jQuery */
+
 // Modal Module
 // Overlay windows
 
@@ -53,6 +55,8 @@ function Modal(title, options){
         });
 
         if(typeof callback === "function")callback(this);
+        
+        return this;
     }
     
     this.close = (callback) => {
@@ -62,6 +66,16 @@ function Modal(title, options){
             overlay.remove();
         });
         if(typeof callback === "function")callback(this);
+        
+        return this;
+    }
+    
+    this.getContent = () => {
+        return content;
+    }
+    
+    this.loadIntoContent = (file, callback) => {
+        content.load(file, callback);
     }
 
 }

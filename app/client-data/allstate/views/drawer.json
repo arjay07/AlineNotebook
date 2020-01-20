@@ -30,6 +30,10 @@
             {
                 "name":"Bind Log",
                 "onclick":"func.openApp(\"BindLog\")"
+            },
+            {
+                "name":"Callbacks",
+                "onclick":"func.openApp(\"Callbacks\")"
             }
         ]
     }

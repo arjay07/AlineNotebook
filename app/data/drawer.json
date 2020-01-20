@@ -4,14 +4,17 @@
         "items":[
             {
                 "name":"Contact",
+                "icon":"fas fa-id-card",
                 "onclick":"func.openModal(\"contact\")"
             },
             {
                 "name":"Changelog",
+                "icon":"fas fa-sticky-note",
                 "onclick":"func.openModal(\"changelog\")"
             },
             {
                 "name":"Settings",
+                "icon":"fas fa-cogs",
                 "onclick":"func.openModal(\"settings\")"
             }
         ]

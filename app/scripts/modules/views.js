@@ -1,4 +1,4 @@
-/* global $, luxon, Swal, jQuery */
+/* global $, luxon, Swal, jQuery, store */
 
 // Views Module
 import { API } from "./api.js";
@@ -6,7 +6,7 @@ import { AlineNotepad } from "./notepad.js";
 import { func } from "./dom.js";
 import { Note } from "./note.js";
 import { Modal } from "./modal.js";
-import { BindLog } from "./bindlog.js"
+import { BindLog, Bind } from "./bindlog.js"
 import { Callbacks, Callback } from "./callback.js"
 var DateTime = luxon.DateTime;
 
@@ -19,6 +19,8 @@ views.contingents = [];
 
 var goalsLoaded = false;
 var goals={};
+
+var settingsLoaded = false;
 
 views.selectedQuote = "auto";
 
@@ -117,12 +119,18 @@ const loadAppDrawer = data => {
         items.forEach(i => {
             var name = i.name;
             var url = i.url;
+            
+            var link = $(`<a class='drawerlink' target='_blank'>${name}</a>`);
+
+            if(i.icon){
+                link.append($(`<i class="${i.icon}"></i>`).css("margin-left", 10));
+            }
 
             if (!i.onclick)
-                drawer.append(`<a class='drawerlink' href='${url}' target='_blank'>${name}</a>`);
+                drawer.append(link.attr("href", url));
             else {
                 var onclick = i.onclick;
-                drawer.append(`<a class='drawerlink' onclick='${onclick}' target='_blank'>${name}</a>`);
+                drawer.append(link.attr("onclick", onclick));
             }
         });
     });
@@ -156,8 +164,7 @@ views.loadView = (data, viewClass, parent) => {
                         if (c.required) labelcell.addClass("required");
                         var inputcell = $("<td></td>");
                         var input = $("<input/>");
-                        if (c.id) input.attr("data-id", c.id);
-                        if (c.placeholder) input.attr("placeholder", c.placeholder);
+                        var sendBtn;
 
                         if (c.listeners)
                             c.listeners.forEach(listener => {
@@ -211,6 +218,15 @@ views.loadView = (data, viewClass, parent) => {
                                 input = $("<textarea></textarea>");
                                 if (c.placeholder) input.attr("placeholder", c.placeholder);
                                 break;
+                                
+                            case "email":
+                                input.attr("type", "text");
+                                sendBtn = $(`<td><div class="sendbtn"><i class="fas fa-envelope"></i></div></td>`);
+                                sendBtn.click(function(){
+                                    window.open("mailto:"+input.val()+encodeURI("?subject=Allstate POI [encrypted]"));
+                                });
+                                inputcell.append(input);
+                                break;
                         }
 
                         if (c.contingent) {
@@ -219,11 +235,18 @@ views.loadView = (data, viewClass, parent) => {
                         }
 
                         input.attr("data-input", true);
+                        input.attr("data-note-type", e.type);
+                        if (c.id) input.attr("data-id", c.id);
+                        if (c.placeholder) input.attr("placeholder", c.placeholder);
                         row.append(labelcell);
                         if (c.style) input.css(c.style);
-                        if (c.type != "checkbox") {
+                        if (c.type != "checkbox" || c.type != "email") {
                             inputcell.append(input);
                             row.append(inputcell);
+                        }
+                        
+                        if(sendBtn){
+                            sendBtn.insertAfter(inputcell);
                         }
                     } else {
                         row.append($("<td>"));
@@ -237,6 +260,39 @@ views.loadView = (data, viewClass, parent) => {
         content.append(note);
 
         views.initContingents();
+    });
+}
+
+views.saveValues = ()=> {
+    var values = [];
+    $("[data-input]").each(function(i){
+        if($(this).val()!=""){
+            values.push({
+                id: $(this).data("id"),
+                value: $(this).val(),
+                parent: $(this).data("note-type")
+            });
+        }
+    });
+    store.set("saved", values);
+    
+    return store.get("saved");
+    
+};
+
+views.loadValues = () => {
+    var values = store.get("saved");
+    
+    values.forEach(value => {
+        var id = value.id;
+        var val = value.value;
+        var parent = value.parent;
+        
+        if(parent){
+            $(`.note[data-type="${parent}"] [data-input][data-id="${id}"]`).val(val);
+        }else{
+            $(`.customerinfo [data-input][data-id="${id}"]`).val(val);
+        }
     });
 }
 
@@ -451,8 +507,8 @@ views.loadNotepad = () => {
 
 views.loadNoteMenu = () => {
     var notemenu = $("<div class='notemenu'></div>");
-    var genbtn = $("<div class='btn'>Generate</div>");
-    var resetbtn = $("<div class='btn'>Reset</div>");
+    var genbtn = $("<div class='btn'>Generate<i class='fas fa-cog'></i></div>");
+    var resetbtn = $("<div class='btn'>Reset<i class='fas fa-undo'></i></div>");
 
     genbtn.on("click", () => {
         var notes = [];
@@ -685,23 +741,31 @@ views.openRegisterDialog = () => {
     
     regBtn.click(function(){
         if(name.val()!="")
-            if(emailIsValid(email.val()))
-                if(username.val()!=""){
-                    var usernames = [];
-                    API.db("READ", ["users"], function(data){
-                        data.forEach(function(user){
-                            usernames.push(user.username);
-                        });
-                    }, false);
-                    if(!usernames.includes(username.val())){
-                        if(passwordIsValid(password.val()))
-                            if(password.val() === password2.val())
-                                form.submit();
-                            else errorAlert("Passwords do not match!");
-                        else errorAlert("Please is invalid. Password must be at least 4 characters long, no more than 15 characters. Letters, numbers, and the underscore may be used.")
-                    }else errorAlert("Username is already taken!");
-                }else errorAlert("Please enter a username.");
-            else errorAlert("Email is invalid!");
+            if(emailIsValid(email.val())){
+                var emails = [];
+                API.db("READ", ["users"], function(data){
+                    data.forEach(function(user){
+                        emails.push(user.email);
+                    });
+                }, false);
+                if(!emails.includes(email.val())){
+                    if(username.val()!=""){
+                        var usernames = [];
+                        API.db("READ", ["users"], function(data){
+                            data.forEach(function(user){
+                                usernames.push(user.username);
+                            });
+                        }, false);
+                        if(!usernames.includes(username.val())){
+                            if(passwordIsValid(password.val()))
+                                if(password.val() === password2.val())
+                                    $("#registerform").submit();
+                                else errorAlert("Passwords do not match!");
+                            else errorAlert("Please is invalid. Password must be at least 4 characters long, no more than 15 characters. Letters, numbers, and the underscore may be used.")
+                        }else errorAlert("Username is already taken!");
+                    }else errorAlert("Please enter a username.");
+                }else errorAlert("Email is already registered!");
+            }else errorAlert("Email is invalid!");
         else errorAlert("Please enter your name.");
     });
 
@@ -856,6 +920,73 @@ views.openUserHubDialog = (data) => {
     dialog.show();
 
 }
+
+views.openSettings = (settings) => {
+    var dialog = new Modal("Settings", {
+        keep: true
+    }).show();
+    
+    const loadSettingPage = () => {
+        // For each input change
+        // Save to settings
+        // Load from settings on open
+        $("[data-setting]").each(function(i){
+            var setting = {key: $(this).attr("id"), value:$(this).val()};
+            if($(this).attr("type")=="checkbox")setting.value = $(this).is(":checked");
+            
+            if(settings[settings.key]!=undefined){
+                API.userAPI("WRITE", ["settings."+setting.key, JSON.stringify(setting.value)]);
+            }else{
+                if($(this).attr("type")=="checkbox")
+                    $(this).prop("checked", settings[setting.key]);
+                else $(this).val(settings[setting.key]);
+            }
+            
+            $(this).on("change", function(){
+                if($(this).attr("type")=="checkbox")API.userAPI("WRITE", ["settings."+setting.key, JSON.stringify($(this).is(":checked"))]);
+                else API.userAPI("WRITE", ["settings."+setting.key, JSON.stringify($(this).val())]);
+            });
+        });
+        
+        $("#importdata").click(function(){
+            Swal.fire({
+                title: "Import Data",
+                text: "Import bind log data from Sales Notebook.",
+                input: "text",
+                showCancelButton: true
+            }).then(function(data){
+                if(data.value){
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "If the text you've entered is invalid, your bind log may be corrupted.",
+                        showCancelButton: true,
+                        cancelButtonColor: "#d33",
+                        icon: "warning"
+                    }).then(function(result){
+                        if(result.value){
+                            var bindlogData = JSON.parse(data.value);
+                            
+                            bindlogData.forEach((row, index) => {
+                                if(index>0){
+                                    BindLog.push(new Bind(row[1].value, row[2].value, row[3].value, row[4].value, row[5].value, row[6].value, row[0].value));
+                                }
+                            });
+                            Swal.fire({
+                                text: "Successfully imported bind log!",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    });
+                }
+            });
+            
+        });
+    };
+    
+    dialog.loadIntoContent("/views/settings.html", loadSettingPage);
+};
 
 // Misc Functions
 function formatPhoneNumber(phoneNumberString) {

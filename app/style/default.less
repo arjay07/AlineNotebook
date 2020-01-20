@@ -41,6 +41,17 @@ a{
     outline-color: @accent-color;
 }
 
+.sendbtn{
+    font-size: 1.2em;
+    cursor: pointer;
+    
+    transition: color 0.3s ease;
+}
+
+.sendbtn:hover{
+    color: @accent-color;
+}
+
 textarea, input, select, select option{
     font-family: 'Roboto', sans-serif;
     padding: 4px;
@@ -142,6 +153,10 @@ textarea{
 
 .btn:active{
     background-color: darken(@accent-color, 5%);  
+}
+
+.btn i{
+    margin-left: 10px;
 }
 
 /*Drawer Style*/
@@ -380,6 +395,7 @@ textarea{
     background-color: @bg-color;
     animation-duration: inherit;
     box-sizing: border-box;
+    overflow: auto;
 }
 
 .modaltitle{
@@ -453,6 +469,46 @@ textarea{
     color: @red-color;
 }
 
+// Settings
+.settinggroup{
+    width: 80%;
+    margin: auto;
+    border-bottom: 0.3px solid black;
+    padding: 10px;
+}
+
+.settingheader{
+    font-size: 1.5em;
+    font-weight: bolder;
+    padding: 5px;
+}
+
+.settingitem{
+    padding: 10px;
+    text-align: left;
+}
+
+.settinglabel{
+    font-size: 1.2em;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.settingdesc{
+    width: 50%;
+}
+
+.settingfunction{
+    display: inline-block;
+    float: right;
+}
+
+.settingitem input[type="checkbox"]{
+    width: 20px;
+    height: 20px;
+    padding: 5px;
+}
+
 /*Scrollbar Style*/
 ::-webkit-scrollbar {
     width: 2px;
@@ -487,4 +543,5 @@ select:-webkit-autofill:focus {
     border: .5px solid #0054A6;
     background-color: #fff;
     padding: 4px;
+    font-family: 'Roboto', sans-serif;
 }

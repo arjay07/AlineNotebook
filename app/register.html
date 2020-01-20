@@ -48,20 +48,32 @@
             <img src="images/logo/aline.png"/>
         </div>
         <div class="form">
-            <form id="loginform" method="POST" action="/login">
+            <form id="registerform" method="POST" action="/register">
                 <table>
                     <tr>
+                        <td>Name:</td>
+                        <td><input id="name" name="name" type="text" placeholder="Name"></td>
+                    </tr>
+                    <tr>
+                        <td>Email:</td>
+                        <td><input id="email" name="email" type="text" placeholder="Email"></td>
+                    </tr>
+                    <tr>
                         <td>Username:</td>
-                        <td><input name="username" type="text" placeholder="Username"></td>
+                        <td><input id="username" name="username" type="text" placeholder="Username"></td>
                     </tr>
                     <tr>
                         <td>Password:</td>
-                        <td><input name="password" type="password" placeholder="Password"></td>
+                        <td><input id="password" name="password" type="password" placeholder="Password"></td>
+                    </tr>
+                    <tr>
+                        <td>Confirm:</td>
+                        <td><input id="password2" name="password2" type="password" placeholder="Confirm Password"></td>
                     </tr>
                 </table>
-                <div id="login" class="btn">Login</div>
+                <div id="register" class="btn">Register</div>
             </form>
-            Don't have an account? <br> <a href="/register">Create an account</a>
+            Already have an account? <a href="/register">Login</a>
         </div>
     </div>
 </body>

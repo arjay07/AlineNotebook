@@ -17,6 +17,52 @@
       "email": "ngulm@allstate.com",
       "username": "ngull",
       "password": "$2a$10$dkUUlkwxc8PO3K3oGLLuwu4u616bOETQDlIFRKyjIe2mhV.ei7zhG"
+    },
+    {
+      "name": "Leandro Yabut",
+      "email": "lyabu@allstate.com",
+      "username": "lyabu",
+      "password": "$2a$10$rbhtfCwpCR4Ys/2zonpDvuWqXaAPQwfELUz7MORTp2s8/U4h/GnVO"
+    }
+  ],
+  "sessions": [
+    {
+      "_id": "_dcjfjHVpy8a5qu2EKeOhiTmIQUOHfEv",
+      "session": {
+        "cookie": {
+          "originalMaxAge": null,
+          "expires": null,
+          "httpOnly": true,
+          "path": "/"
+        },
+        "loggedin": true,
+        "user": {
+          "name": "Leandro Yabut",
+          "email": "arjay.07.ly@gmail.com",
+          "username": "arjay07",
+          "password": "$2a$10$tGLOgx1PDlapHXIhf1sGSev/T/TqPRu53s8F4/3sJXEmfKjQaoOOW"
+        }
+      },
+      "expires": 1579567439810
+    },
+    {
+      "_id": "xLpQGNJgDCdLICTCihMG_p4Hjn2ERA1X",
+      "session": {
+        "cookie": {
+          "originalMaxAge": null,
+          "expires": null,
+          "httpOnly": true,
+          "path": "/"
+        },
+        "loggedin": true,
+        "user": {
+          "name": "Leandro Yabut",
+          "email": "arjay.07.ly@gmail.com",
+          "username": "arjay07",
+          "password": "$2a$10$tGLOgx1PDlapHXIhf1sGSev/T/TqPRu53s8F4/3sJXEmfKjQaoOOW"
+        }
+      },
+      "expires": 1579598309872
     }
   ]
 }

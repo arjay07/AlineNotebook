@@ -38,6 +38,22 @@ td input{
     font-size: 1em;
 }
 
+.background img{
+    width: 500px;
+    height: 400px;
+}
+
+.background{
+    position: absolute;
+    width: 500px;
+    height: 400px;
+    margin: auto;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.1;
+}
+
 /* Change Autocomplete styles in Chrome*/
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
@@ -51,4 +67,5 @@ select:-webkit-autofill:focus {
     border: .5px solid #0054A6;
     background-color: #fff;
     padding: 12px;
+    -webkit-font-family: 'Roboto', sans-serif;
 }

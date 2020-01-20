@@ -64,6 +64,16 @@ func.openApp = (appName) => {
     Apps.open(appName);
 }
 
+func.openModal = (modal) =>{
+    switch(modal){
+        case "settings":
+            API.userAPI("READ", ["settings"], function(data){
+                views.openSettings(data);
+            });
+            break;
+    }
+}
+
 func.login = () => {
     views.openLoginDialog();
 }

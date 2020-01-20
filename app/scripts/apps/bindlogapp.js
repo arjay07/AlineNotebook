@@ -1,6 +1,6 @@
 /* global $, Swal, luxon */
 
-// Bind Log App\
+// Bind Log App
 import { Modal } from "../modules/modal.js"
 import { BindLog, Bind } from "../modules/bindlog.js"
 const DateTime = luxon.DateTime;

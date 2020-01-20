@@ -281,14 +281,13 @@
         },
         {
             "label": "Email",
-            "type": "string",
+            "type": "email",
             "id": "email"
         },
         {
             "label": "Birthdate",
             "type": "date",
             "id": "birthdate",
-            "value": "01/01/1980",
             "placeholder": "mm/dd/yyyy"
         }
     ],
@@ -298,7 +297,6 @@
             "sections": [
                 [
                     ["name"],
-                    ["birthdate"],
                     ["phone", "permissiontocallback"],
                     ["email"]
                 ],

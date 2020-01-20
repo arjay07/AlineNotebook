@@ -1,6 +1,5 @@
 /* Aline Notebook */
 /* Copyright © 2019 Leandro Yabut. All rights reserved.*/
-
 // Express Server
 const express = require("express");
 const path = require("path");
@@ -10,13 +9,22 @@ const bcrypt = require("bcryptjs");
 const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const session = require("express-session");
+const lowdbSessionStore = require("lowdb-session-store")(session);
 
 const app = express();
-const address = "18.219.220.245";
 
 const clientName="allstate";
 
 var eagleEye = true;
+
+// Setup JSON DB
+const adapter = new FileSync(`${__dirname}/app/db.json`);
+const db = low(adapter);
+
+db.defaults({
+    users: [],
+    sessions: []
+}).write();
 
 // General
 app.use(express.static(__dirname+"/app"));
@@ -27,16 +35,9 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 app.use(session({
     "secret":"1uJOs0HcQs",
     saveUninitialized: false,
-    resave: false
+    resave: false,
+    store: new lowdbSessionStore(db.get("sessions"))
 }));
-
-// Setup JSON DB
-const adapter = new FileSync(`${__dirname}/app/db.json`);
-const db = low(adapter);
-
-db.defaults({
-    users: []
-}).write();
 
 // Home Route
 app.get("/",function(req, res){
@@ -57,11 +58,11 @@ app.post('/login', function(req, res) {
             if(eagleEye)console.log(req.session.user.username + " logged in.");
             res.redirect("/");
         }else{
-            req.session.errorMessage="Invalid username or password.";
+            req.session.loginErrorMessage="Invalid username or password.";
             res.redirect("/login");
         }
     }else{
-        req.session.errorMessage="Please enter a username and password.";
+        req.session.loginErrorMessage="Please enter a username and password.";
         res.redirect("/login");
     }
 });
@@ -99,6 +100,14 @@ app.post("/register",function(req,res){
     res.redirect("/");
 });
 
+app.get("/register", function(req, res){
+    if(!req.session.loggedin){
+        req.session.loginErrorMessage=null;
+        res.sendFile(path.join(__dirname,"app","register.html"));
+    }else
+        res.redirect("/");
+});
+
 function registerAccount(name, email, username, password){
     var user = {
         name: name,
@@ -110,6 +119,7 @@ function registerAccount(name, email, username, password){
     var hash = bcrypt.hashSync(password, 10);
     user.password = hash;
     db.get("users").push(user).write();
+    
 }
 
 function authenticate(username, password){

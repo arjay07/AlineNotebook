@@ -14,7 +14,7 @@ var drawerLoaded=false;
 var noteViewsLoaded=false;
 var customerViewsLoaded=false;
 
-const init = () => {
+const init = function(){
 
     // Init DOM functions
     func.init();
@@ -40,10 +40,16 @@ const init = () => {
     views.initTabs();
     views.loadNotepad();
     views.loadNoteMenu();
+    views.loadValues();
 
     API.getSession(function(data) {
         views.startSplash(data);
         views.displayUser(data);
     });
 }
+
 $(document).ready(init);
+
+$(window).on("beforeunload", function(){
+    views.saveValues();
+});

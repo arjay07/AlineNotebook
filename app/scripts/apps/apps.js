@@ -3,19 +3,20 @@
 import { API } from "../modules/api.js";
 import { views } from "../modules/views.js";
 import { BindLogApp } from "./bindlogapp.js"
+import { CallbackApp } from "./callbackapp.js";
 
 // Apps
 
 const Apps = {
-    BindLog: BindLogApp
+    BindLog: BindLogApp,
+    Callbacks: CallbackApp
 };
 
 Apps.open = app => {
     
     API.getSession(
         function(data){
-            var loggedin = data.loggedin;
-            if(loggedin)Apps[app].open();
+            if(data.loggedin)Apps[app].open();
             else views.openLoginDialog();
         });
 }
