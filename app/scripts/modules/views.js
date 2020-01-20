@@ -949,7 +949,7 @@ views.openSettings = (settings) => {
             });
         });
         
-        $("#importdata").click(function(){
+        $("#importolddata").click(function(){
             Swal.fire({
                 title: "Import Data",
                 text: "Import bind log data from Sales Notebook.",
@@ -984,6 +984,50 @@ views.openSettings = (settings) => {
             });
             
         });
+        
+        $("#importdata").click(function(){
+            Swal.fire({
+                title: "Import Data",
+                text: "Import bind log data from Aline Notebook.",
+                input: "text",
+                showCancelButton: true
+            }).then(function(data){
+                if(data.value){
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "If the text you've entered is invalid, your bind log may be corrupted.",
+                        showCancelButton: true,
+                        cancelButtonColor: "#d33",
+                        icon: "warning"
+                    }).then(function(result){
+                        if(result.value){
+                            var bindlogData = JSON.parse(data.value);
+                            
+                            bindlogData.forEach((bind) => {
+                                BindLog.push(bind);
+                            });
+                            Swal.fire({
+                                text: "Successfully imported bind log!",
+                                icon: "success",
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                        }
+                    });
+                }
+            });
+            
+        });
+        
+        $("#exportdata").click(function(){
+            func.copyText(JSON.stringify(BindLog.get()));
+            Swal.fire({
+                title: "Copied!",
+                text: "Bind Log data copied to clipboard. Paste into a text file for safe keeping.",
+                icon: "success"
+            });
+        });
+        
     };
     
     dialog.loadIntoContent("/views/settings.html", loadSettingPage);
