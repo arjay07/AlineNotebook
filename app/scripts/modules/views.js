@@ -760,7 +760,7 @@ views.openRegisterDialog = () => {
                         if(!usernames.includes(username.val())){
                             if(passwordIsValid(password.val()))
                                 if(password.val() === password2.val())
-                                    $("#registerform").submit();
+                                    form.submit();
                                 else errorAlert("Passwords do not match!");
                             else errorAlert("Please is invalid. Password must be at least 4 characters long, no more than 15 characters. Letters, numbers, and the underscore may be used.")
                         }else errorAlert("Username is already taken!");
@@ -972,6 +972,7 @@ views.openSettings = (settings) => {
                                     BindLog.push(new Bind(row[1].value, row[2].value, row[3].value, row[4].value, row[5].value, row[6].value, row[0].value));
                                 }
                             });
+        
                             Swal.fire({
                                 text: "Successfully imported bind log!",
                                 icon: "success",
@@ -995,7 +996,7 @@ views.openSettings = (settings) => {
                 if(data.value){
                     Swal.fire({
                         title: "Are you sure?",
-                        text: "If the text you've entered is invalid, your bind log may be corrupted.",
+                        text: "If the text you've entered is invalid, your bind log may be corrupted. This will overwrite your current bindlog.",
                         showCancelButton: true,
                         cancelButtonColor: "#d33",
                         icon: "warning"
@@ -1006,6 +1007,7 @@ views.openSettings = (settings) => {
                             bindlogData.forEach((bind) => {
                                 BindLog.push(bind);
                             });
+                            
                             Swal.fire({
                                 text: "Successfully imported bind log!",
                                 icon: "success",

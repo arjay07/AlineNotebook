@@ -28,7 +28,7 @@ BindLog.load = () => {
 }
 
 BindLog.push = (bind, callback) => {
-    API.userAPI("PUSH", ["bindlog", JSON.stringify(bind)], callback);
+    API.userAPI("PUSH", ["bindlog", JSON.stringify(bind)], callback, false);
     BindLog.loaded = false;
 }
 

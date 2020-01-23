@@ -10,21 +10,19 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const session = require("express-session");
 const lowdbSessionStore = require("lowdb-session-store")(session);
+const myAwsAdapter = require("./modules/lowdb-s3-adapter.js");
 
 const app = express();
 
 const clientName="allstate";
 
-var eagleEye = true;
-
-// Setup JSON DB
-const adapter = new FileSync(`${__dirname}/app/db.json`);
-const db = low(adapter);
-
-db.defaults({
+const adapter = new myAwsAdapter("db.json", {aws: {bucketName: "aline-db", acl: "public-read"}, defaultValue: {
     users: [],
     sessions: []
-}).write();
+}});
+const db = low(adapter);
+
+var eagleEye = true;
 
 // General
 app.use(express.static(__dirname+"/app"));
@@ -32,6 +30,7 @@ app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
     extended: true
 })); 
+
 app.use(session({
     "secret":"1uJOs0HcQs",
     saveUninitialized: false,
@@ -191,32 +190,34 @@ app.post("/userapi", function(req, res){
         var user = req.session.user;
         var username = user.username;
 
-        fs.mkdirSync(path.join(__dirname, `app/users/${username}`), { recursive: true });
-
-        const adapter = new FileSync(`${__dirname}/app/users/${username}/db.json`);
-        const db = low(adapter);
-
-        db.defaults({
-            user: {
-                name: user.name,
-                username: user.username,
-                email: user.email
+        const adapter = new myAwsAdapter(`users/${username}/db.json`, {
+            aws: {
+                bucketName: "aline-db",
+                acl: "public-read"
             },
-            bindlog: [],
-            goals: {
-                daily: {
-                    items: 5,
-                    bundles: 2
+            defaultValue: {
+                user: {
+                    name: user.name,
+                    username: user.username,
+                    email: user.email
                 },
-                monthly: {
-                    items: 50,
-                    bundles: 10
-                }
-            },
-            callbacks: [],
-            notes: [],
-            settings: {},
-        }).write();
+                bindlog: [],
+                goals: {
+                    daily: {
+                        items: 5,
+                        bundles: 2
+                    },
+                    monthly: {
+                        items: 50,
+                        bundles: 10
+                    }
+                },
+                callbacks: [],
+                notes: [],
+                settings: {},
+            }
+        });
+        const db = low(adapter);
         
         var args = req.body.arguments;
         
