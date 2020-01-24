@@ -75,8 +75,10 @@ app.get("/login", function(req, res){
 
 app.get("/logout", function(req, res){
     if(eagleEye)console.log(req.session.user.username + " logged out.");
-    req.session.destroy();
-    res.redirect("/");
+    req.session.destroy(function(err){
+        if(err)console.log("Error", err);
+        res.redirect("/");
+    });
 });
 
 // Register Route
