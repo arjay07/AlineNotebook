@@ -25,22 +25,26 @@ BindLog.load = () => {
     }, false);
     bl.sort((a,b) => {return DateTime.fromFormat(a.date, "MM/dd/yyyy")-DateTime.fromFormat(b.date, "MM/dd/yyyy")});
     return bl;
-}
+};
 
 BindLog.push = (bind, callback) => {
-    API.userAPI("PUSH", ["bindlog", JSON.stringify(bind)], callback, false);
+    API.userAPI("PUSH", ["bindlog", JSON.stringify(bind)], callback);
     BindLog.loaded = false;
-}
+};
 
 BindLog.remove = (bind, callback) => {
     API.userAPI("REMOVE", ["bindlog", JSON.stringify(bind)], callback);
     BindLog.loaded = false;
-}
+};
 
 BindLog.overwrite = (bindlog, callback) => {
     API.userAPI("WRITE", ["bindlog", JSON.stringify(bindlog)], callback);
     BindLog.loaded = false;
-}
+};
+
+BindLog.addTo = (binds, callback) => {
+    BindLog.overwrite(BindLog.get().concat(binds), callback);
+};
 
 BindLog.items = (bindlog) => {
     if(bindlog===undefined)bindlog = BindLog.get();
@@ -48,9 +52,26 @@ BindLog.items = (bindlog) => {
     bindlog.forEach(
         bind => {
             items+=parseInt(bind.items);
-        })
+        });
     return items;
-}
+};
+
+BindLog.bundles = (bindlog) => {
+    if(bindlog===undefined)bindlog = BindLog.load();
+    var bindsPerCustomer = {};
+    var bundles = 0;
+    bindlog.forEach(
+        bind => {
+            var x = bind.date.replace(/\//g, "")+(bind.name.replace(/[\W_]+/g,"").toLowerCase());
+            bindsPerCustomer[x] = (bindsPerCustomer[x]||0)+1;
+        });
+    for(var key in bindsPerCustomer){
+        if(bindsPerCustomer[key]>1){
+            bundles+=bindsPerCustomer[key]-1;
+        }
+    }
+    return bundles;
+};
 
 BindLog.filter = filter => {
     var bindlog = BindLog.get();
@@ -97,23 +118,6 @@ BindLog.filter = filter => {
     return filteredBindLog;
 }
 
-BindLog.bundles = (bindlog) => {
-    if(bindlog===undefined)bindlog = BindLog.load();
-    var bindsPerCustomer = {};
-    var bundles = 0;
-    bindlog.forEach(
-        bind => {
-            var x = bind.date.replace(/\//g, "")+(bind.name.replace(/[\W_]+/g,"").toLowerCase());
-            bindsPerCustomer[x] = (bindsPerCustomer[x]||0)+1;
-        })
-    for(var key in bindsPerCustomer){
-        if(bindsPerCustomer[key]>1){
-            bundles++;
-        }
-    }
-    return bundles;
-}
-
 Object.size = function(obj) {
     var size = 0, key;
     for (key in obj) {
@@ -124,7 +128,7 @@ Object.size = function(obj) {
 
 BindLog.addFromCustomer = (customer, onsuccess,onerror) => {
     var notes = customer.notes;
-    
+    var customerBinds = [];
     notes.forEach(
         noteData => {
             var note = noteData.values;
@@ -140,12 +144,15 @@ BindLog.addFromCustomer = (customer, onsuccess,onerror) => {
             
             if(validate.valid){
                 if(typeof onsuccess === "function")onsuccess();
-                BindLog.push(bind);
+                customerBinds.push(bind);
             }
             else{
                 if(typeof onerror === "function")onerror(validate.invalidProperties);
             }
         });
+    var newBindLog = BindLog.get().concat(customerBinds);
+    
+    BindLog.overwrite(newBindLog);
 }
 
 function Bind(name, controlnumber, premium, items, policynumber, referencenumber, date){

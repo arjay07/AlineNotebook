@@ -224,6 +224,7 @@ app.post("/userapi", function(req, res){
         switch(req.body.functionname){
             case "READ":
                 var data = db.get(args[0]).value();
+                
                 res.json(data);
             break;
             

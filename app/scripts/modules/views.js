@@ -810,7 +810,9 @@ views.openUserHubDialog = (data) => {
         
         var goalNames = ["dig", "dbg", "mig", "mbg"];
         
-        if(!goalsLoaded)API.userAPI("READ", ["goals"], function(data){goals = data; goalsLoaded=true}, false);
+        API.userAPI("READ", ["goals"], function(data){
+            goals = data;
+        }, false);
         
         function updateGoalsView(goal){
             var filteredGoals = {
@@ -853,7 +855,9 @@ views.openUserHubDialog = (data) => {
             
             //console.log(goal, filteredGoals[goal], parseInt($("#"+goal).val()), (filteredGoals[goal]/parseInt($("#"+goal).val()))*100);
             
-            if(updateGoal.length>0)API.userAPI("WRITE", updateGoal);
+            if(updateGoal.length>0){
+                API.userAPI("WRITE", updateGoal);
+            };
         }
         
         $("#dig")
@@ -966,12 +970,15 @@ views.openSettings = (settings) => {
                     }).then(function(result){
                         if(result.value){
                             var bindlogData = JSON.parse(data.value);
+                            var binds = [];
                             
                             bindlogData.forEach((row, index) => {
                                 if(index>0){
-                                    BindLog.push(new Bind(row[1].value, row[2].value, row[3].value, row[4].value, row[5].value, row[6].value, row[0].value));
+                                    binds.push(new Bind(row[1].value, row[2].value, row[3].value, row[4].value, row[5].value, row[6].value, row[0].value));
                                 }
                             });
+                            
+                            BindLog.addTo(binds);
         
                             Swal.fire({
                                 text: "Successfully imported bind log!",
@@ -996,7 +1003,7 @@ views.openSettings = (settings) => {
                 if(data.value){
                     Swal.fire({
                         title: "Are you sure?",
-                        text: "If the text you've entered is invalid, your bind log may be corrupted. This will overwrite your current bindlog.",
+                        text: "If the text you've entered is invalid, your bind log may be corrupted.",
                         showCancelButton: true,
                         cancelButtonColor: "#d33",
                         icon: "warning"
@@ -1004,9 +1011,7 @@ views.openSettings = (settings) => {
                         if(result.value){
                             var bindlogData = JSON.parse(data.value);
                             
-                            bindlogData.forEach((bind) => {
-                                BindLog.push(bind);
-                            });
+                            BindLog.addTo(bindlogData);
                             
                             Swal.fire({
                                 text: "Successfully imported bind log!",

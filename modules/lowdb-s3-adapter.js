@@ -80,7 +80,9 @@ module.exports = class {
         }
     });
     
-    deasync.sleep(100);
+    deasync.loopWhile(()=>!done);
+    
+    //console.log("done writing");
     
   }
 };

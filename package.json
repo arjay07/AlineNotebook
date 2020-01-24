@@ -24,6 +24,7 @@
     "lowdb-adapter-aws-s3": "^1.1.2",
     "lowdb-session-store": "^1.1.0",
     "modules": "^0.4.0",
+    "pify": "^4.0.1",
     "s3fs": "^2.5.0"
   }
 }
