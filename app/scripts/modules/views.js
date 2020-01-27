@@ -6,8 +6,9 @@ import { AlineNotepad } from "./notepad.js";
 import { func } from "./dom.js";
 import { Note } from "./note.js";
 import { Modal } from "./modal.js";
-import { BindLog, Bind } from "./bindlog.js"
-import { Callbacks, Callback } from "./callback.js"
+import { BindLog, Bind } from "./bindlog.js";
+import { Callbacks, Callback } from "./callback.js";
+import { Apps } from "../apps/apps.js";
 var DateTime = luxon.DateTime;
 
 const views = {};
@@ -17,10 +18,7 @@ const content = $(".content");
 const dateFormat = {month: "2-digit", day: "2-digit", year: "numeric"};
 views.contingents = [];
 
-var goalsLoaded = false;
 var goals={};
-
-var settingsLoaded = false;
 
 views.selectedQuote = "auto";
 
@@ -184,6 +182,10 @@ views.loadView = (data, viewClass, parent) => {
                                 input.blur(() => {
                                     if (input.val().length == 10) input.val(formatPhoneNumber(input.val()));
                                 });
+                                sendBtn = $(`<td><div class="sendbtn"><i class="fas fa-phone-square-alt"></i></div></td>`);
+                                sendBtn.click(function(){
+                                    Apps.open("ScheduleCallback");
+                                });
                                 break;
 
                             case "date":
@@ -280,8 +282,8 @@ views.saveValues = ()=> {
     
 };
 
-views.loadValues = () => {
-    var values = store.get("saved");
+views.loadValues = (vals) => {
+    var values = vals||store.get("saved");
     
     if(values)
         values.forEach(value => {
@@ -847,7 +849,7 @@ views.openUserHubDialog = (data) => {
                 width: "100%",
                 marginLeft: "10px"
             });
-            API.userAPI("READ", ["goals"], function(data){goals = data; goalsLoaded=true});
+            API.userAPI("READ", ["goals"], function(data){goals = data;});
             newCirc.attr("id", goal+"circ");
             newCirc.attr("data-percent", percent);
             $("#"+goal+"circ").replaceWith(newCirc);
@@ -897,7 +899,6 @@ views.openUserHubDialog = (data) => {
             border: "none",
             borderBottom: "2px solid black"
         }).on("change", function(){
-            goalsLoaded=false;
             updateGoalsView($(this).attr("id"));
         });
         
@@ -1038,7 +1039,7 @@ views.openSettings = (settings) => {
     };
     
     dialog.loadIntoContent("/views/settings.html", loadSettingPage);
-};
+}
 
 // Misc Functions
 function formatPhoneNumber(phoneNumberString) {

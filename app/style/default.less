@@ -471,6 +471,7 @@ textarea{
 
 // Settings
 .settinggroup{
+    position: relative;
     width: 80%;
     margin: auto;
     border-bottom: 0.3px solid black;
@@ -501,13 +502,83 @@ textarea{
 
 .settingfunction{
     display: inline-block;
-    float: right;
+    position: absolute;
+    right: 0;
 }
 
 .settingitem input[type="checkbox"]{
     width: 20px;
     height: 20px;
     padding: 5px;
+}
+
+// Callback Card
+.callbackcard{
+    position: relative;
+    background-color: lighten(@bg-color, 10%);
+    max-width: 400px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 3px black;
+    padding: 10px;
+    margin: 10px;
+}
+
+.callbacknumber{
+    font-size: 1.5em;
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+}
+
+.callbackname{
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.callbackdate, .callbacktime{
+    font-size: 1.2em;
+    display: inline-block;
+    margin: 10px;
+}
+
+.viewnote{
+    position: absolute;
+    right: 60px;
+    bottom: 10px;
+    border-radius: 15px;
+}
+
+.deletecallback{
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    border-radius: 50px;
+    height: 15px;
+    width: 15px;
+    text-align: center;
+    background-color: @red-color;
+}
+
+.deletecallback i{
+    margin: 0;
+}
+
+.deletecallback:hover{
+    background-color: lighten(@red-color, 5%);
+}
+
+.deletecallback:active{
+    background-color: darken(@red-color, 5%);  
+}
+
+.callbackstatus{
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 2em;
+}
+
+.schedulermenu{
+    text-align: center;
 }
 
 /*Scrollbar Style*/

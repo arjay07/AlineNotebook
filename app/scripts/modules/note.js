@@ -30,13 +30,13 @@ function Note(quoteType) {
 }
 
 Note.Customer = function(notes){
-    this.notes = notes;
+    this.notes = notes||[];
     this.values = {};
     this.gatherInfo = () => {
 
         var values = {};
 
-        values.quoteType=notes[0].type;
+        if(this.notes.length>0)values.quoteType=this.notes[0].type;
 
         $('.customerinfo [data-input="true"]')
         .each(function(i){

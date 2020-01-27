@@ -7,7 +7,6 @@ const fs = require("fs");
 const bodyParser = require('body-parser');
 const bcrypt = require("bcryptjs");
 const low = require('lowdb');
-const FileSync = require('lowdb/adapters/FileSync');
 const session = require("express-session");
 const lowdbSessionStore = require("lowdb-session-store")(session);
 const myAwsAdapter = require("./modules/lowdb-s3-adapter.js");
@@ -17,10 +16,12 @@ const app = express();
 const clientName="allstate";
 
 const adapter = new myAwsAdapter("db.json", {aws: {bucketName: "aline-db", acl: "public-read"}, defaultValue: {
-    users: [],
-    sessions: []
+    users: []
 }});
 const db = low(adapter);
+
+const sessionAdapter = new myAwsAdapter("sessions.json", {aws: {bucketName: "aline-db", acl: "public-read"}, defaultValue: []});
+const sessionsDb = low(sessionAdapter);
 
 var eagleEye = true;
 
@@ -35,7 +36,7 @@ app.use(session({
     "secret":"1uJOs0HcQs",
     saveUninitialized: false,
     resave: false,
-    store: new lowdbSessionStore(db.get("sessions"))
+    store: new lowdbSessionStore(sessionsDb)
 }));
 
 // Home Route
@@ -75,10 +76,12 @@ app.get("/login", function(req, res){
 
 app.get("/logout", function(req, res){
     if(eagleEye)console.log(req.session.user.username + " logged out.");
-    req.session.destroy(function(err){
-        if(err)console.log("Error", err);
-        res.redirect("/");
-    });
+    if(req.session){
+        req.session.destroy(function(err){
+            if(err)console.log("Error", err);
+            res.redirect("/");
+        });
+    }
 });
 
 // Register Route

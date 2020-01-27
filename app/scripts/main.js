@@ -6,7 +6,7 @@
 import {API} from "./modules/api.js"
 import {views} from "./modules/views.js"
 import {func} from "./modules/dom.js"
-import {Modal} from "./modules/modal.js";
+import {Callbacks} from "./modules/callback.js";
 
 // Loaded variables 
 // Prevents views from loading again in same session
@@ -42,10 +42,13 @@ const init = function(){
     views.loadNoteMenu();
     views.loadValues();
 
+    // Stuff to do after the session is loaded...
     API.getSession(function(data) {
         views.startSplash(data);
         views.displayUser(data);
     });
+    
+    if(Callbacks.get().length>0)Callbacks.startClock();
 }
 
 $(document).ready(init);

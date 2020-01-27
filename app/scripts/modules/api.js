@@ -100,6 +100,7 @@ API.getSession = (success, isAsync) => {
         type: "POST",
         url: "/session",
         success: function (data) {
+            console.log(data);
             if(typeof success === "function")success(data);
         },
         error: function(xhr, status, error) {

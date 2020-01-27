@@ -1,0 +1,37 @@
+<div class="schedulerview">
+    <table class="schedulertable">
+        <tr>
+            <td>Name: </td>
+            <td><input type="text" placeholder="Name" id="schedulername"></td>
+        </tr>
+        <tr>
+            <td>Phone #: </td>
+            <td><input type="text" placeholder="Phone" id="schedulerphone"></td>
+        </tr>
+        <tr>
+            <td>Date: </td>
+            <td><input type="text" placeholder="mm/dd/yyyy" id="schedulerdate"></td>
+        </tr>
+        <tr>
+            <td>Time: </td>
+            <td><input type="text" id="schedulertime"></td>
+        </tr>
+        <tr>
+            <td>Remind: </td>
+            <td>
+                <select id="schedulerremind">
+                    <option value="5">5 Minutes</option>
+                    <option value="10">10 Minutes</option>
+                    <option value="15">15 Minutes</option>
+                    <option value="30">30 Minutes</option>
+                    <option value="60">1 Hour</option>
+                    <option value="1440">1 Day</option>
+                </select>
+                <label>Save Note: <input type="checkbox" id="schedulersavenote" checked/></label>
+            </td>
+        </tr>
+    </table>
+    <div class="schedulermenu">
+        <div class="btn" id="schedulercreate">Create</div>
+    </div>
+</div>

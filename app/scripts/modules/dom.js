@@ -29,6 +29,18 @@ func.toggleDrawer = () => {
     }
 };
 
+func.hideDrawer = () => {
+    var drawer=$(".drawer");
+    var bars=$(".fa-bars");
+    
+    if(!drawer.hasClass("hidden")){
+        bars.css("margin-left", "-2px");
+        animateCSS(".drawer", "slideOutLeft", function(){
+            drawer.addClass("hidden");
+        }); 
+    }
+};
+
 // Toast Message
 func.toastMessage = (msg, length) => {
     var toast = $("<div></div>");
