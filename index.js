@@ -8,20 +8,36 @@ const bodyParser = require('body-parser');
 const bcrypt = require("bcryptjs");
 const low = require('lowdb');
 const session = require("express-session");
-const lowdbSessionStore = require("lowdb-session-store")(session);
+const AWS = require("aws-sdk");
+const DynamoDB = AWS.DynamoDB;
+const DynamoDbSessionStore = require("dynamodb-store");
 const myAwsAdapter = require("./modules/lowdb-s3-adapter.js");
+const deasync = require("deasync");
 
 const app = express();
 
 const clientName="allstate";
+
+AWS.config.update({
+    region: "us-east-2"
+});
 
 const adapter = new myAwsAdapter("db.json", {aws: {bucketName: "aline-db", acl: "public-read"}, defaultValue: {
     users: []
 }});
 const db = low(adapter);
 
-const sessionAdapter = new myAwsAdapter("sessions.json", {aws: {bucketName: "aline-db", acl: "public-read"}, defaultValue: []});
-const sessionsDb = low(sessionAdapter);
+const ddb = new DynamoDB({apiVersion: '2012-08-10'});
+
+const sessionStore = new DynamoDbSessionStore({
+    table: {
+        name: "aline-sessions",
+        hashKey: "session"
+    },
+    dynamoConfig: {
+        region: "us-east-2"
+    }
+});
 
 var eagleEye = true;
 
@@ -36,7 +52,7 @@ app.use(session({
     "secret":"1uJOs0HcQs",
     saveUninitialized: false,
     resave: false,
-    store: new lowdbSessionStore(sessionsDb)
+    store: sessionStore
 }));
 
 // Home Route
@@ -46,24 +62,30 @@ app.get("/",function(req, res){
 
 // Login/Logout Route
 app.post('/login', function(req, res) {
-    if(req.body.username&&req.body.password){
-        var username = req.body.username;
-        var password = req.body.password;
     
-        var auth=authenticate(username, password);
     
-        if(auth.authenticated()){
-            req.session.loggedin=true;
-            req.session.user=auth.user;
-            if(eagleEye)console.log(req.session.user.username + " logged in.");
-            res.redirect("/");
+    if(req.session.loggedin){
+        res.redirect("/");
+    }else{
+        if(req.body.username&&req.body.password){
+            var username = req.body.username.toLowerCase();
+            var password = req.body.password;
+        
+            var auth=authenticate(username, password);
+        
+            if(auth.authenticated()){
+                req.session.loggedin=true;
+                req.session.user=auth.user;
+                //if(eagleEye)console.log(req.session.user.username + " logged in.");
+                res.redirect("/");
+            }else{
+                req.session.loginErrorMessage="Invalid username or password.";
+                res.redirect("/login");
+            }
         }else{
-            req.session.loginErrorMessage="Invalid username or password.";
+            req.session.loginErrorMessage="Please enter a username and password.";
             res.redirect("/login");
         }
-    }else{
-        req.session.loginErrorMessage="Please enter a username and password.";
-        res.redirect("/login");
     }
 });
 
@@ -88,9 +110,8 @@ app.get("/logout", function(req, res){
 app.post("/register",function(req,res){
     var name = req.body.name;
     var email = req.body.email;
-    var username = req.body.username;
+    var username = req.body.username.toLowerCase();
     var password = req.body.password;
-    var confirmPassword = req.body.password2;
 
     registerAccount(name, email, username, password);
     var auth=authenticate(username, password);
@@ -114,36 +135,52 @@ app.get("/register", function(req, res){
 
 function registerAccount(name, email, username, password){
     var user = {
-        name: name,
-        email: email,
-        username: username,
-        password: password
+        name: {S: name},
+        email: {S: email},
+        username: {S: username},
+        password: {S: password}
     }
 
     var hash = bcrypt.hashSync(password, 10);
-    user.password = hash;
-    db.get("users").push(user).write();
+    user.password = {S: hash};
     
+    ddb.putItem({
+        TableName: "aline-users",
+        Item: user
+    }, function(err, data){
+        if(err) throw err;
+        console.log(data);
+    });
 }
 
 function authenticate(username, password){
     var query = {
-        username: username,
-        password: password
+        username: {S: username}
     }
-
-    var users = db.get("users").value();
-
-    var user = users.filter(
-        u => u.username == query.username
-    )[0];
+    
+    var user = null;
+    var done = false;
+    ddb.getItem({
+        TableName: "aline-users",
+        Key: query
+    }, function(err, data){
+        if(err) throw err;
+        user = data.Item;
+        done = true;
+    });
+    
+    deasync.loopWhile(()=>!done);
 
     return {
         authenticated: function(){
-            if(user)return bcrypt.compareSync(query.password, user.password);
+            if(user)return bcrypt.compareSync(password, user.password.S);
             else return false;
         }, 
-        user: user
+        user: {
+            name: user.name.S,
+            email: user.email.S,
+            username: user.username.S
+        }
     };
     
 }

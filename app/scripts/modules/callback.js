@@ -36,22 +36,30 @@ Callbacks.load = function(){
 };
 
 Callbacks.save = function(){
-    API.userAPI("WRITE", ["callbacks", JSON.stringify(Callbacks.get())], false)
+    API.userAPI("WRITE", ["callbacks", JSON.stringify(Callbacks.get())], function(data){
+            Callbacks.loaded = false;
+        }, false);
 }
 
 Callbacks.push = function(callback, success){
-    API.userAPI("PUSH", ["callbacks", JSON.stringify(callback)], success);
-    Callbacks.loaded = false;
+    API.userAPI("PUSH", ["callbacks", JSON.stringify(callback)], function(data){
+            Callbacks.loaded = false;
+            if(typeof success === "function")success(data);
+        });
 };
 
 Callbacks.remove = function(callback, success){
-    API.userAPI("REMOVE", ["callbacks", JSON.stringify(callback.getSimple())], success);
-    Callbacks.loaded = false;
+    API.userAPI("REMOVE", ["callbacks", JSON.stringify(callback.getSimple())], function(data){
+            Callbacks.loaded = false;
+            if(typeof success === "function")success(data);
+        });
 };
 
 Callbacks.overwrite = function(callbacks, success){
-    API.userAPI("WRITE", ["callbacks", JSON.stringify(callbacks)], success);
-    Callbacks.loaded = false;
+    API.userAPI("WRITE", ["callbacks", JSON.stringify(callbacks)], function(data){
+            Callbacks.loaded = false;
+            if(typeof success === "function")success(data);
+        });
 };
 
 Callbacks.addFromCustomer = function(customerObj, dateTime, remind, saveNotes){

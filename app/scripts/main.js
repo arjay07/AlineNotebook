@@ -41,6 +41,7 @@ const init = function(){
     views.loadNotepad();
     views.loadNoteMenu();
     views.loadValues();
+    views.initCalculator();
 
     // Stuff to do after the session is loaded...
     API.getSession(function(data) {

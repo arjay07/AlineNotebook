@@ -28,18 +28,25 @@ BindLog.load = () => {
 };
 
 BindLog.push = (bind, callback) => {
-    API.userAPI("PUSH", ["bindlog", JSON.stringify(bind)], callback);
-    BindLog.loaded = false;
+    API.userAPI("PUSH", ["bindlog", JSON.stringify(bind)], function(data){
+        BindLog.loaded = false;
+        if(typeof callback === "function")callback(data);
+    });
 };
 
 BindLog.remove = (bind, callback) => {
-    API.userAPI("REMOVE", ["bindlog", JSON.stringify(bind)], callback);
-    BindLog.loaded = false;
+    API.userAPI("REMOVE", ["bindlog", JSON.stringify(bind)], function(data){
+        BindLog.loaded = false;
+        if(typeof callback === "function")callback(data);
+    });
+    
 };
 
 BindLog.overwrite = (bindlog, callback) => {
-    API.userAPI("WRITE", ["bindlog", JSON.stringify(bindlog)], callback);
-    BindLog.loaded = false;
+    API.userAPI("WRITE", ["bindlog", JSON.stringify(bindlog)], function(data){
+        BindLog.loaded = false;
+        if(typeof callback === "function")callback(data);
+    });
 };
 
 BindLog.addTo = (binds, callback) => {
@@ -182,4 +189,4 @@ function Bind(name, controlnumber, premium, items, policynumber, referencenumber
     
 }
 
-export {BindLog, Bind}
+export {BindLog, Bind};

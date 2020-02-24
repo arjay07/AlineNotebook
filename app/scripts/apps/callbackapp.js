@@ -22,7 +22,7 @@ CallbackApp.close = function(){
     CallbackApp.dialog.close();
 }
 
-CallbackApp.constructCallbackList = () => {
+CallbackApp.constructCallbackList = function(){
     
     var view = $("<div class='callbacklist'></div>");
     
@@ -151,31 +151,49 @@ CallbackApp.ScheduleCallback.open = () => {
             Note.getActiveNotes().forEach(e => { notes.push(new Note(e).gatherInfo()); });
     
             var customer = new Note.Customer(notes).gatherInfo();
-            Callbacks.addFromCustomer(
-                customer, 
-                Callbacks.getDateTime(date.val() + " " + time.val()), 
-                parseInt(remind.val()),
-                savenote.is(":checked"));
             
+            var canCreate = false;
             
-            Swal.fire({
-                html: `Scheduled callback for <strong>${name.val()}</strong>`,
-                showConfirmButton: false,
-                icon: "success",
-                timer: 2500,
-                toast: true,
-                position: "top",
-                showClass: {
-                    popup: 'animated fadeInDown faster'
-                },
-                hideClass: {
-                    popup: 'animated fadeOutUp faster'
+            if(customer.name && customer.phone){
+                Callbacks.addFromCustomer(
+                    customer, 
+                    Callbacks.getDateTime(date.val() + " " + time.val()), 
+                    parseInt(remind.val()),
+                    savenote.is(":checked"));
+                    canCreate = true;
+            }else{
+                if(name.val()!="" && phone.val() != ""){
+                    Callbacks.push(new Callback(name.val(), phone.val(), Callbacks.getDateTime(date.val() + " " + time.val()), parseInt(remind.val())));
+                    canCreate = true;
                 }
-            });
+            } 
             
-            if(Callbacks.clock===null)Callbacks.startClock();
+            if(canCreate){
+                Swal.fire({
+                    html: `Scheduled callback for <strong>${name.val()}</strong>`,
+                    showConfirmButton: false,
+                    icon: "success",
+                    timer: 2500,
+                    toast: true,
+                    position: "top",
+                    showClass: {
+                        popup: 'animated fadeInDown faster'
+                    },
+                    hideClass: {
+                        popup: 'animated fadeOutUp faster'
+                    }
+                });
+                
+                if(Callbacks.clock===null)Callbacks.startClock();
+                
+                dialog.close();
             
-            dialog.close();
+            }else{
+                Swal.fire({
+                    text: "Unable to create callback. Please check name or phone number.",
+                    icon: "error"
+                });
+            }
         });
         
     });

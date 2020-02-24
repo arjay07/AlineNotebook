@@ -483,11 +483,13 @@ views.loadNotepad = () => {
     fsbtn.click(function(){
         notepad.addClass("fs");
         menu.show();
+        notepad.focus();
     });
     
     exit.click(function(){
         notepad.removeClass("fs");
         menu.hide();
+        notepad.click();
     });
     
     copy.click(function(){
@@ -1039,6 +1041,19 @@ views.openSettings = (settings) => {
     };
     
     dialog.loadIntoContent("/views/settings.html", loadSettingPage);
+}
+
+views.initCalculator = () => {
+    
+    var calcWindow = $(`<iframe class="calcwindow"></iframe>`);
+    var calcHandle = $(`<div class="calchandler></div>`);
+    
+    calcWindow.append(calcHandle);
+    
+    calcWindow.load("/views/calculator.html");
+    
+    //$(document.body).append(calcWindow);
+    
 }
 
 // Misc Functions
