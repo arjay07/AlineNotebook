@@ -79,9 +79,14 @@ func.openApp = (appName) => {
 func.openModal = (modal) =>{
     switch(modal){
         case "settings":
-            API.userAPI("READ", ["settings"], function(data){
-                views.openSettings(data);
-            });
+            API.getSession(
+                function(data){
+                    func.hideDrawer();
+                    if(data.loggedin)API.userAPI("READ", ["settings"], function(data){
+                        views.openSettings(data);
+                    });
+                    else views.openLoginDialog();
+                });
             break;
     }
 }

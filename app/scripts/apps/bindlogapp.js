@@ -263,8 +263,4 @@ function getBindLogFrom(table){
     return bindlog;
 }
 
-function downloadBindlog(bindlog){
-    
-}
-
 export { BindLogApp }
