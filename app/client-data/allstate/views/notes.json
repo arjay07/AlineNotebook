@@ -1046,6 +1046,73 @@
                     ]
                 }
             ]
+        },
+        {
+            "label": "California Earthquake",
+            "type": "cea",
+            "sections": [
+                {
+                    "label": "General",
+                    "table": [
+                        [
+                            "controlnumber"
+                        ],
+                        [
+                            "policynumber"
+                        ],
+                        [
+                            "effectivedate",
+                            "closingdate"
+                        ],
+                        [
+                            "noprior",
+                            "pqbmodified"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Coverage",
+                    "table": [
+                        [
+                            "personalproperty"
+                        ],
+                        [
+                            "deductible"
+                        ],
+                        [
+                            "rejected"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Payment",
+                    "table": [
+                        [
+                            "quotedprice",
+                            "declinedbind"
+                        ],
+                        [
+                            "downpayment",
+                            "paymethod"
+                        ],
+                        [
+                            "refnumber"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Documents",
+                    "table": [
+                        [
+                            "docsreceived",
+                            "informedoftdocs"
+                        ],
+                        [
+                            "esign"
+                        ]
+                    ]
+                }
+            ]
         }
     ]
 }
