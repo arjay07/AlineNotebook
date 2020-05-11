@@ -96,15 +96,16 @@ function addCallbackCard(view, callback){
         });
     });
     
-    if(callback.notes.length>0){
-        viewNote.click(function(){
-            // console.log(callback.notes);
-            var values = Callbacks.convertToValues(callback.notes);
-            views.loadValues(values);
-            CallbackApp.close();
-        });
-        callbackCard.append(viewNote);
-    }
+    if(callback.notes)
+        if(callback.notes.length>0){
+            viewNote.click(function(){
+                // console.log(callback.notes);
+                var values = Callbacks.convertToValues(callback.notes);
+                views.loadValues(values);
+                CallbackApp.close();
+            });
+            callbackCard.append(viewNote);
+        }
     
     view.append(callbackCard);
 }
