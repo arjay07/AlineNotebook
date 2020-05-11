@@ -1104,6 +1104,18 @@ views.openSettings = (settings) => {
     dialog.loadIntoContent("/views/settings.html", loadSettingPage);
 }
 
+views.openChangelog = () => {
+    var dialog = new Modal("Changelog");
+    dialog.show();
+    dialog.loadIntoContent("/views/changelog.html");
+};
+
+views.openContact = () => {
+    var dialog = new Modal("Contact");
+    dialog.show();
+    dialog.loadIntoContent("/views/contact.html")
+};
+
 views.loadSettings = () => {
     API.userAPI("READ", ["settings"], function(settings){
         

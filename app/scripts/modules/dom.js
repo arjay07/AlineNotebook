@@ -88,6 +88,14 @@ func.openModal = (modal) =>{
                     else views.openLoginDialog();
                 });
             break;
+            
+        case "changelog":
+            views.openChangelog();
+            break;
+            
+        case "contact":
+            views.openContact();
+            break;
     }
 }
 
