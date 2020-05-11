@@ -23,7 +23,7 @@ Callbacks.load = function(){
     var cb=[];
     API.userAPI("READ", ["callbacks"],
         function(data){
-            data.forEach(
+            if(data)data.forEach(
                 callback => {
                     cb.push(
                         Callbacks.createFromJSON(callback)
@@ -36,6 +36,7 @@ Callbacks.load = function(){
 };
 
 Callbacks.save = function(){
+    //console.log("Save", JSON.stringify(Callbacks.get()));
     API.userAPI("WRITE", ["callbacks", JSON.stringify(Callbacks.get())], function(data){
             Callbacks.loaded = false;
         }, false);
@@ -67,10 +68,11 @@ Callbacks.addFromCustomer = function(customerObj, dateTime, remind, saveNotes){
     var callback = new Callback(customer.name, customer.phone, dateTime, remind);
     if(saveNotes){
         callback.notes = [];
-        callback.notes = callback.notes.concat(customer);
         customerObj.notes.forEach(note => {
             callback.notes.push(note.values);
         })
+        
+        callback.notes = callback.notes.concat(customer);
     }
     Callbacks.push(callback);
 };
@@ -83,7 +85,7 @@ Callbacks.getDateTime = function(dateTimeString){
 Callbacks.startClock = function(){
     if(Callbacks.clock===null){
     
-        console.log("Callbacks clock started...");
+        //console.log("Callbacks clock started...");
         Callbacks.clock = setInterval(function(){
             
             var dateTime = DateTime.local();
@@ -104,6 +106,7 @@ Callbacks.startClock = function(){
 }
 
 Callbacks.createFromJSON = function(json){
+    //console.log("JSON", json);
     return new Callback(
         json.name, 
         json.phone, 
@@ -114,6 +117,23 @@ Callbacks.createFromJSON = function(json){
         json.reminded, 
         json.snoozed, 
         json.status);
+}
+
+Callbacks.convertToValues = function(notes){
+    
+    var values = [];
+    
+    if(notes){
+        notes.forEach(note => {
+            for(var property in note){
+                var value = {id: property, value: note[property]};
+                if(note.type)value.parent = note.type
+                values.push(value);
+            }
+        });
+    }
+    
+    return values;
 }
 
 // Callback object with built in alerts
@@ -128,19 +148,7 @@ function Callback(name, phone, dateTime, remind, notes, alerted, reminded, snooz
     this.reminded = reminded||false;
     this.snoozed = snoozed||false;
     this.status = status||"upcoming";
-    this.notes = [];
-    
-    if(notes){
-        notes.forEach(note => {
-            for(var property in note){
-                var value = {};
-                value.id = property;
-                value.value = note[property];
-                if(note.type)value.parent = note.type
-                this.notes.push(value);
-            }
-        });
-    }
+    this.notes = notes;
     
     this.alert = () => {
         

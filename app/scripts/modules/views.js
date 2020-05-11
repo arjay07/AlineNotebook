@@ -7,8 +7,8 @@ import { func } from "./dom.js";
 import { Note } from "./note.js";
 import { Modal } from "./modal.js";
 import { BindLog, Bind } from "./bindlog.js";
-import { Callbacks, Callback } from "./callback.js";
 import { Apps } from "../apps/apps.js";
+import { ThemeLoader } from "./themeloader.js";
 var DateTime = luxon.DateTime;
 
 const views = {};
@@ -283,6 +283,7 @@ views.saveValues = ()=> {
 };
 
 views.loadValues = (vals) => {
+    
     var values = vals||store.get("saved");
     
     if(values)
@@ -294,9 +295,15 @@ views.loadValues = (vals) => {
             if(parent){
                 $(`.note[data-type="${parent}"] [data-input][data-id="${id}"]`).val(val);
             }else{
-                $(`.customerinfo [data-input][data-id="${id}"]`).val(val);
+                var input = $(`.customerinfo [data-input][data-id="${id}"]`);
+                
+                if(input.is("input[type='checkbox']")){
+                    if(val) input.prop("checked", true);
+                }else input.val(val);
             }
         });
+        
+    // console.log(values);
 }
 
 views.addContingent = (type, inputcell, labelcell, component, value) => {
@@ -472,9 +479,11 @@ views.switchTab = quote => {
 
 views.loadNotepad = () => {
     var notepadDiv = $("<div class='notepadDiv'></div>");
-    var notepad = new AlineNotepad();
+    views.notepad = new AlineNotepad();
+    var notepad = views.notepad;
     var fsbtn = $("<div class='fsbtn'><i class=\"fas fa-expand fa-lg\"></i></div>");
     var menu = $("<div class='fsnotemenu'></div>");
+    views.fsmenu = menu;
     var copy = $("<div class='btn'>Copy</div>");
     var exit = $("<div class='btn'>Exit <i class='fas fa-sign-out-alt'></i></div>");
     
@@ -537,7 +546,7 @@ views.loadNoteMenu = () => {
     resetbtn.click(() => {
         Swal.fire({
             title: "Are you sure?",
-            text: "Your notes cannot be recovered.",
+            text: "Your notes cannot be recovered unless they are saved in a callback.",
             icon: "warning",
             showCancelButton: true,
             cancelButtonColor: '#d33'
@@ -793,7 +802,8 @@ views.openUserHubDialog = (data) => {
     var header = $(`<h1>Hello, ${data.user.name.split(" ")[0]}!</h1>`);
     var subheader = $(`<h3>Welcome to your HUB</h3>
     <p>Keep track of your goals and manage your account.</p>`);
-    var goalsDiv = $("<div class='goals'></div>");
+    var goalsDiv = $("<div class='goals' style='margin-bottom:50px'></div>");
+    var account = $("<div class='account'></div>");
     var logout = $("<div class='btn'>Logout</div>");
     
     logout.click(function(){
@@ -914,10 +924,43 @@ views.openUserHubDialog = (data) => {
             marginLeft: "10px"
         })
     });
+    account.load("/views/account.html", function(){
+        var email = $("#newemail");
+        var password = $("#newpassword");
+        var confirmpassword = $("#confirmnewpassword");
+        var changepassword = $("#changepassword");
+        var changepasswordform = $("#changepasswordform");
+        
+        email.val(data.user.email);
+        
+        function errorAlert(msg){
+            Swal.fire({
+                text: msg,
+                icon: "error"
+            });
+        }
+        
+        function passwordIsValid(password){
+            return /^[a-zA-Z]\w{3,14}$/.test(password)
+        }
+        
+        changepassword.click(function(){
+            if(passwordIsValid(password.val()))
+                if(password.val() === confirmpassword.val())
+                    changepasswordform.submit();
+                else errorAlert("Passwords do not match!");
+            else errorAlert("Please is invalid. Password must be at least 4 characters long, no more than 15 characters. Letters, numbers, and the underscore may be used.")
+        });
+    });
     
-    var content = [header, subheader, goalsDiv, logout];
+    var content = [
+        header, 
+        subheader, 
+        goalsDiv,
+        account,
+        logout];
     
-    var dialog = new Modal("Profile", {
+    var dialog = new Modal("User HUB", {
         content: content,
         style: {
             borderRadius: "5px",
@@ -935,26 +978,6 @@ views.openSettings = (settings) => {
     }).show();
     
     const loadSettingPage = () => {
-        // For each input change
-        // Save to settings
-        // Load from settings on open
-        $("[data-setting]").each(function(i){
-            var setting = {key: $(this).attr("id"), value:$(this).val()};
-            if($(this).attr("type")=="checkbox")setting.value = $(this).is(":checked");
-            
-            if(settings[settings.key]!=undefined){
-                API.userAPI("WRITE", ["settings."+setting.key, JSON.stringify(setting.value)]);
-            }else{
-                if($(this).attr("type")=="checkbox")
-                    $(this).prop("checked", settings[setting.key]);
-                else $(this).val(settings[setting.key]);
-            }
-            
-            $(this).on("change", function(){
-                if($(this).attr("type")=="checkbox")API.userAPI("WRITE", ["settings."+setting.key, JSON.stringify($(this).is(":checked"))]);
-                else API.userAPI("WRITE", ["settings."+setting.key, JSON.stringify($(this).val())]);
-            });
-        });
         
         $("#importolddata").click(function(){
             Swal.fire({
@@ -1038,9 +1061,67 @@ views.openSettings = (settings) => {
             });
         });
         
+        var themeselect = $("#themeselect");
+        
+        API.readJSON("/themes/themes.json", function(themes){
+            themes.forEach(theme => {
+                var option = $(`<option value="${theme.file}">${theme.name}</option>`);
+                themeselect.append(option);
+            });
+        }, true);
+        
+        themeselect.change(function(){
+            var selected = $("#themeselect option:selected");
+            var themeFile = selected.val();
+            ThemeLoader.load(themeFile);
+        });
+        
+        // For each input change
+        // Save to settings
+        // Load from settings on open
+        $("[data-setting]").each(function(i){
+            var setting = {key: $(this).attr("id"), value:$(this).val()};
+            if($(this).attr("type")=="checkbox")setting.value = $(this).is(":checked");
+            
+            if(settings[settings.key]!=undefined){
+                API.userAPI("WRITE", ["settings."+setting.key, JSON.stringify(setting.value)]);
+            }else{
+                if($(this).attr("type")=="checkbox")
+                    $(this).prop("checked", settings[setting.key]);
+                else $(this).val(settings[setting.key]);
+                
+                //console.log(settings[setting.key], settings, setting.key);
+            }
+            
+            $(this).on("change", function(){
+                if($(this).attr("type")=="checkbox")API.userAPI("WRITE", ["settings."+setting.key, JSON.stringify($(this).is(":checked"))]);
+                else API.userAPI("WRITE", ["settings."+setting.key, JSON.stringify($(this).val())]);
+            });
+        });
+        
     };
     
     dialog.loadIntoContent("/views/settings.html", loadSettingPage);
+}
+
+views.loadSettings = () => {
+    API.userAPI("READ", ["settings"], function(settings){
+        
+        // Fullscreen Notepad
+        if(settings.fsnotepad){
+            var notepad = views.notepad;
+            
+            notepad.addClass("fs");
+            views.fsmenu.show();
+            notepad.focus();
+        }
+        
+        // Theme
+        if(settings.themeselect){
+            ThemeLoader.load(settings.themeselect);
+        }
+        
+    }, true);
 }
 
 views.initCalculator = () => {

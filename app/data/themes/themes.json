@@ -1,0 +1,18 @@
+[
+
+    {
+        "name": "Default",
+        "file": "default.json"
+    },
+    
+    {
+        "name": "Light Theme",
+        "file": "light.json"
+    },
+    
+    {
+        "name": "Dark Theme",
+        "file": "dark.json"
+    }
+    
+]

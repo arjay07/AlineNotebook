@@ -100,7 +100,6 @@ API.getSession = (success, isAsync) => {
         type: "POST",
         url: "/session",
         success: function (data) {
-            console.log(data);
             if(typeof success === "function")success(data);
         },
         error: function(xhr, status, error) {
@@ -149,7 +148,7 @@ function xhrError(xhr, functionname){
     
     Swal.fire({
         title: "API Error ("+functionname+")",
-        html: `<div style="overflow:auto">${xhr.responseText}</div>`,
+        html: `<div style="overflow:auto;max-width:400px;">${xhr.responseText}</div>`,
         icon: "error"
     });
 }

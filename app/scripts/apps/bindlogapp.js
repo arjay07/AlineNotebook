@@ -60,7 +60,7 @@ BindLogApp.open = () => {
     var addBtn = $("<div class='btn'>Add</div>");
     var dlBtn = $("<div class='btn'>Download</div>");
     var logview = BindLogApp.constructBindLogTable();
-    var table = logview.children(".bindlog").first();
+    //var table = logview.children(".bindlog").first();
     var menu = $("<div class='bindmenu'></div>");
     var itemsView = $("<span id='itemsview'></span>");
     var bundlesView = $("<span id='bundlesview'></span>");
@@ -126,7 +126,10 @@ BindLogApp.open = () => {
         itemsView.html("<strong>Items: </strong>"+currentItems);
         bundlesView.html("<strong>Bundles: </strong>"+currentBundles);
     });
-    filterSelect.val("All");
+    
+    // Set default value
+    filterSelect.val("MTD");
+    filterSelect.change();
     
     menu.append($("<strong>Filter: </strong>"), filterSelect, itemsView, bundlesView);
     menu.css({
@@ -168,11 +171,16 @@ BindLogApp.open = () => {
         });
     });
     
+    dlBtn.click(function(){
+        var bl = getBindLogFrom($(".bindlog"));
+        downloadBindlog(bl);
+    });
+    
     var dialog = new Modal("Bind Log", {
         content: [
             menu,
             logview,
-            saveBtn, addBtn, dlBtn
+            saveBtn, addBtn, //dlBtn
             ],
         style: {
             "max-width": 600
@@ -253,6 +261,10 @@ function getBindLogFrom(table){
         });
     
     return bindlog;
+}
+
+function downloadBindlog(bindlog){
+    
 }
 
 export { BindLogApp }

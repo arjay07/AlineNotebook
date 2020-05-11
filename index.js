@@ -133,6 +133,15 @@ app.get("/register", function(req, res){
         res.redirect("/");
 });
 
+// Account Management Routes
+app.post("/changepassword", function(req, res){
+    if(req.session.loggedin){
+        changePassword(req.session.user.username, req.body.password);
+    }
+    
+    res.redirect("/");
+});
+
 function registerAccount(name, email, username, password){
     var user = {
         name: {S: name},
@@ -150,6 +159,27 @@ function registerAccount(name, email, username, password){
     }, function(err, data){
         if(err) throw err;
         console.log(data);
+    });
+}
+
+function changePassword(username, password){
+    
+    var query = {
+        username: {S: username}
+    }
+    
+    var hash = bcrypt.hashSync(password, 10);
+    
+    ddb.updateItem({
+        TableName: "aline-users",
+        Key: query,
+        UpdateExpression: "SET password = :val1",
+        ExpressionAttributeValues: {
+            ":val1": {S: hash}
+        }
+    }, function(err, data){
+        if(err) throw err;
+        done = true;
     });
 }
 

@@ -23,7 +23,7 @@ BindLog.load = () => {
         BindLog.bindlog = data;
         BindLog.loaded = true;
     }, false);
-    bl.sort((a,b) => {return DateTime.fromFormat(a.date, "MM/dd/yyyy")-DateTime.fromFormat(b.date, "MM/dd/yyyy")});
+    if(bl)bl.sort((a,b) => {return DateTime.fromFormat(a.date, "MM/dd/yyyy")-DateTime.fromFormat(b.date, "MM/dd/yyyy")});
     return bl;
 };
 

@@ -2,9 +2,16 @@
 
 /* Variables */
 @bg-color: #e5e5e5;
+@text-color: #e5e5e5;
 @accent-color: #0054A6;
 @dom-color: #1d1d1d;
 @red-color: rgb(167, 0, 0);
+@default-text: black;
+@btn-text-color: #e5e5e5;
+@drawer-text-color: #dadada;
+@modal-title-text-color: #e5e5e5;
+@input-bg-color: white;
+@bindlog-bg-color: white;
 
 /*General Document Style*/
 html, body{
@@ -14,6 +21,7 @@ html, body{
     padding: 0;
     background-color: @bg-color;
     overflow-x: hidden;
+    color: @default-text;
 }
 
 a{
@@ -55,6 +63,9 @@ a{
 textarea, input, select, select option{
     font-family: 'Roboto', sans-serif;
     padding: 4px;
+    background-color: @input-bg-color;
+    color: @default-text;
+    border: none;
 }
 
 select{
@@ -137,7 +148,7 @@ textarea{
     display: inline-block;
     padding: 15px;
     background-color: @accent-color;
-    color: #e5e5e5;
+    color: @btn-text-color;
     border-radius: 2px;
     cursor: pointer;
     margin: 5px;
@@ -157,6 +168,22 @@ textarea{
 
 .btn i{
     margin-left: 10px;
+}
+
+.iconbtn{
+    color: @accent-color;
+    text-align: center;
+    display: inline;
+    font-size: 1.1em;
+    cursor: pointer;
+}
+
+.iconbtn:hover{
+    color: lighten(@accent-color, 5%);
+}
+
+.iconbtn:active{
+    color: darken(@accent-color, 5%);  
 }
 
 /*Drawer Style*/
@@ -184,7 +211,7 @@ textarea{
     padding: 10px;
     padding-left: 25px;
     cursor: pointer;
-    color: #dadada;
+    color: @drawer-text-color;
     font-size: 1.1rem;
     text-decoration: none;
 }
@@ -222,7 +249,7 @@ textarea{
 /* Quote Filter */
 .quotefilter{
     width: 200px;
-    color: #e5e5e5;
+    color: @text-color;
     background-color: @dom-color;
     padding: 12px;
     margin-left: 10px;
@@ -260,7 +287,7 @@ textarea{
 .filterbtn{
     width: 100%;
     background-color: lighten(@dom-color, 2%);
-    color: #e5e5e5;
+    color: @text-color;
     padding: 12px;
     box-sizing: border-box;
 }
@@ -279,7 +306,7 @@ textarea{
 .tab{
     display: inline-block;
     background-color: @dom-color;
-    color: @bg-color;
+    color: @text-color;
     padding:10px;
     padding-right: 20px;
     box-sizing: border-box;
@@ -401,7 +428,7 @@ textarea{
 .modaltitle{
     width: 100vw;
     text-align: center;
-    color: #e5e5e5;
+    color: @modal-title-text-color;
     margin-top: 55px;
     animation-duration: inherit;
 }
@@ -413,7 +440,7 @@ textarea{
     left: 0;
     font-size: 2.5em;
     cursor: pointer;
-    color: #131313;
+    color: @default-text;
     background-color: @bg-color;
     width: 40px;
     height: 40px;
@@ -452,7 +479,7 @@ textarea{
 .bindrow td{
     margin: 0;
     border: 0.5px solid black;
-    background-color: white;
+    background-color: @bindlog-bg-color;
     padding: 5px;
     font-family: 'Roboto', sans-serif
 }
@@ -504,6 +531,10 @@ textarea{
     display: inline-block;
     position: absolute;
     right: 0;
+}
+
+.settingfunctionlabel{
+    font-weight: bold;
 }
 
 .settingitem input[type="checkbox"]{

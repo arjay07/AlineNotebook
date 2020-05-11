@@ -1,4 +1,4 @@
-/* global $ */
+/* global $*/
 
 // Main Script
 
@@ -47,6 +47,7 @@ const init = function(){
     API.getSession(function(data) {
         views.startSplash(data);
         views.displayUser(data);
+        views.loadSettings();
     });
     
     if(Callbacks.get().length>0)Callbacks.startClock();

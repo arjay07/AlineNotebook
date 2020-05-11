@@ -826,6 +826,73 @@
             ]
         },
         {
+            "label": "Manufactured Home",
+            "type": "manufacturedhome",
+            "sections": [
+                {
+                    "label": "General",
+                    "table": [
+                        [
+                            "controlnumber"
+                        ],
+                        [
+                            "policynumber"
+                        ],
+                        [
+                            "effectivedate",
+                            "closingdate"
+                        ],
+                        [
+                            "noprior",
+                            "pqbmodified"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Coverage",
+                    "table": [
+                        [
+                            "dwelling"
+                        ],
+                        [
+                            "deductible"
+                        ],
+                        [
+                            "rejected"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Payment",
+                    "table": [
+                        [
+                            "quotedprice",
+                            "declinedbind"
+                        ],
+                        [
+                            "downpayment",
+                            "paymethod"
+                        ],
+                        [
+                            "refnumber"
+                        ]
+                    ]
+                },
+                {
+                    "label": "Documents",
+                    "table": [
+                        [
+                            "docsreceived",
+                            "informedoftdocs"
+                        ],
+                        [
+                            "esign"
+                        ]
+                    ]
+                }
+            ]
+        },
+        {
             "label": "Motor Home",
             "type": "motorhome",
             "sections": [

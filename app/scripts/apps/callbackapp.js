@@ -28,6 +28,8 @@ CallbackApp.constructCallbackList = function(){
     
     var callbacks = Callbacks.get();
     
+    callbacks.sort((a, b)=>a.dateTime-b.dateTime);
+    
     callbacks.forEach(callback => {
         addCallbackCard(view, callback);
     });
@@ -96,7 +98,9 @@ function addCallbackCard(view, callback){
     
     if(callback.notes.length>0){
         viewNote.click(function(){
-            views.loadValues(callback.notes);
+            // console.log(callback.notes);
+            var values = Callbacks.convertToValues(callback.notes);
+            views.loadValues(values);
             CallbackApp.close();
         });
         callbackCard.append(viewNote);
@@ -135,7 +139,6 @@ CallbackApp.ScheduleCallback.open = () => {
         
         phone.blur(function(){
             phone.val(formatPhoneNumber(phone.val()));
-            console.log("test");
         });
         
         time.val(DateTime.local().plus({minutes: 30}).toLocaleString(DateTime.TIME_SIMPLE));
@@ -154,7 +157,8 @@ CallbackApp.ScheduleCallback.open = () => {
             
             var canCreate = false;
             
-            if(customer.name && customer.phone){
+            if(customer.values.name && customer.values.phone){
+            
                 Callbacks.addFromCustomer(
                     customer, 
                     Callbacks.getDateTime(date.val() + " " + time.val()), 

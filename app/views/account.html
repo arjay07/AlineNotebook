@@ -1,0 +1,32 @@
+<div class="settinggroup">
+    <div class="settingheader">
+        Account
+    </div>
+    <div class="settingitem">
+        <div class="settinglabel">Email</div>
+        <div class="settingfunction">
+            <input readonly id="newemail" placeholder="johndoe@email.com"/>
+        </div>
+        <div class="settingdesc">Your email is used to recover passwords.</div>
+    </div>
+    
+    <div class="settingheader">
+        Password
+    </div>
+    <div class="settingitem">
+        <div class="settinglabel">Password</div>
+        <div class="settingfunction">
+            <form id="changepasswordform" method="post" action="/changepassword">
+                <input autocomplete="off" id="newpassword" name="password" type="password" placeholder="Enter New Password"/>
+            </form>
+        </div>
+        <div class="settingdesc">Change your password. Your password must have more than 4 characters but no more than 15 characters. You may only use letter, numbers, and the underscore.</div>
+    </div>
+    <div class="settingitem">
+        <div class="settinglabel">Confirm Password</div>
+        <div class="settingfunction">
+            <input autocomplete="off" id="confirmnewpassword" type="password" placeholder="Re-Enter Password"/> <div id="changepassword" class="iconbtn"><i class="fas fa-check"></i></div>
+        </div>
+        <div class="settingdesc">Re-enter your new password and click the check mark to confirm your new password.</div>
+    </div>
+</div>

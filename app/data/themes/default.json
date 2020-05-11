@@ -1,0 +1,15 @@
+{
+
+"@bg-color": "#e5e5e5",
+"@text-color": "#e5e5e5",
+"@accent-color": "#0054A6",
+"@dom-color": "#1d1d1d",
+"@red-color": "rgb(167, 0, 0)",
+"@default-text": "black",
+"@btn-text-color": "#e5e5e5",
+"@drawer-text-color": "#dadada",
+"@modal-title-text-color": "#e5e5e5",
+"@input-bg-color": "white"
+
+
+}
