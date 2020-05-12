@@ -598,7 +598,7 @@ views.openNotePreview = (customer) => {
     });
     previewNote.text(generatedNote);
 
-    var copy = $("<div class='btn'>Copy</div>");
+    var copy = $("<div class='btn'>Copy<i class=\"fas fa-copy\"></i></div>");
     copy.on("click", () => {
         func.copyText(previewNote.val());
         Swal.fire(
@@ -610,7 +610,7 @@ views.openNotePreview = (customer) => {
             });
     });
 
-    var addToBindLog = $("<div class='btn'>Add to Bindlog</div>");
+    var addToBindLog = $("<div class='btn'>Add to Bindlog<i class=\"fas fa-plus\"></i></div>");
     addToBindLog.on("click", () => {
         BindLog.addFromCustomer(customer,
             function(){
@@ -1107,7 +1107,11 @@ views.openSettings = (settings) => {
 views.openChangelog = () => {
     var dialog = new Modal("Changelog");
     dialog.show();
-    dialog.loadIntoContent("/views/changelog.html");
+    dialog.loadIntoContent("/views/changelog.html", function(){
+        API.readText("changelog.txt", function(data){
+            $("#changelog").val(data);
+        });
+    });
 };
 
 views.openContact = () => {

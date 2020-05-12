@@ -5,11 +5,12 @@
     "@accent-color": "#0054A6",
     "@dom-color": "#0d0d0d",
     "@red-color": "rgb(167, 0, 0)",
-    "@default-text": "#e5e5e5",
+    "@default-text": "#dadada",
     "@btn-text-color": "#e5e5e5",
     "@drawer-text-color": "#dadada",
     "@modal-title-text-color": "#e5e5e5",
     "@input-bg-color": "#252525",
-    "@bindlog-bg-color": "#252525"
+    "@bindlog-bg-color": "#252525",
+    "@required-text-color": "#0268cc"
 
 }

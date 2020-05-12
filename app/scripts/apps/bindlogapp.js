@@ -171,16 +171,11 @@ BindLogApp.open = () => {
         });
     });
     
-    dlBtn.click(function(){
-        var bl = getBindLogFrom($(".bindlog"));
-        downloadBindlog(bl);
-    });
-    
     var dialog = new Modal("Bind Log", {
         content: [
             menu,
             logview,
-            saveBtn, addBtn, //dlBtn
+            saveBtn, addBtn //dlBtn
             ],
         style: {
             "max-width": 600

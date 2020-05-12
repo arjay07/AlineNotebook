@@ -1,0 +1,56 @@
+<div id="shortrategenerator">
+    
+    <div class="formdiv">
+        <p>Select the state you are short rating and the miles the customer is stating they drive.</p>
+    </div>
+    
+    <div class="formdiv">
+        State: 
+        <select id="states">
+            <option value="ca">CA</option>
+            <option value="fl">FL</option>
+            <option value="nj">NJ</option>
+            <option value="other">All Others...</option>
+        </select>
+    </div>
+    
+    <div class="formdiv">
+        Miles: <input type="number" id="miles"/>
+        <div id="notshortrated">Not short rated.</div>
+    </div>
+    
+    <div id="njref">
+        Refer to <a href="https://allstate.rightanswers.com/portal/app/portlets/results/viewsolution.jsp?solutionid=190415212741182&page=1&position=1&q=nj%20short%20rate">New Jersey New Business Short Rate Process</a>.
+    </div>
+    
+    <div id="shortrated">
+        
+        <div class="formdiv">Short Rated Vehicle: <input id="shortratedvehicle" placeholder="Year/Make/Model"/></div>
+        <div class="formdiv">Short Rated Driver: <input id="shortrateddriver" placeholder="John Doe"/></div>
+        <div class="formdiv">Short Rate Reason: 
+            <select id="shortratereason">
+                <option value="works close to home">Works close to home</option>
+                <option value="works from home">Works from home</option>
+                <option value="is a homemaker">Homemaker</option>
+                <option value="is retired">Retired</option>
+                <option value="has a company car or other primary mode of transporation">Has a company car or other...</option>
+                <option value="stopped working to stay home with children">Stay home with children</option>
+                <option value="uses public transportation to get to work">Public transportation to get to work</option>
+                <option value="is deployed in the Military">Military (Deployed)</option>
+                <option value="is out of country for over 6 months">Out of Country (over 6 months)</option>
+                <option value="walks to work/school">Walks to work/school</option>
+                <option value="rides a bike to work/school">Rides a bike to work/school</option>
+            </select>
+        </div>
+        
+        <div class="formdiv">
+            <div class="btn" id="generateshortrate">Generate<i class='fas fa-cog'></i></div>
+        </div>
+        
+        <div class="formdiv">
+            <textarea id="shortratenote" readonly></textarea>
+            <br>
+            <div class="btn" id="copyshortrate">Copy<i class="fas fa-copy"></i></div>
+        </div>
+    </div>
+</div>

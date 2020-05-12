@@ -12,6 +12,7 @@
 @modal-title-text-color: #e5e5e5;
 @input-bg-color: white;
 @bindlog-bg-color: white;
+@required-text-color: rgb(63, 148, 24);
 
 /*General Document Style*/
 html, body{
@@ -232,7 +233,7 @@ textarea{
 }
 
 .required{
-    color: rgb(63, 148, 24);
+    color: @required-text-color;
     font-weight: bold;
 }
 
@@ -618,6 +619,14 @@ textarea{
     padding: 10px;
 }
 
+// Changelog
+#changelog{
+    overflow: auto;
+    width: calc(100% - 10px);
+    height: 100%;
+    font-family: courier;
+}
+
 // Calculator
 
 .calcwindow{
@@ -632,6 +641,20 @@ textarea{
 .calchandle{
     height: 40px;
     width: 100%;
+}
+
+/** Narrative Generator **/
+
+.formdiv{
+    margin: 5px;
+}
+
+.formdiv select{
+    max-width: 250px;
+}
+
+.formdiv textarea{
+    min-width: 350px;
 }
 
 /*Scrollbar Style*/

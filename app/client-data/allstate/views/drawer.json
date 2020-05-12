@@ -34,6 +34,10 @@
             {
                 "name":"Callbacks",
                 "onclick":"func.openApp(\"Callbacks\")"
+            },
+            {
+                "name":"Narrative Generator",
+                "onclick":"func.openApp(\"NarrativeGenerator\")"
             }
         ]
     }

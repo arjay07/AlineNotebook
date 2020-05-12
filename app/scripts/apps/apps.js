@@ -4,6 +4,7 @@ import { API } from "../modules/api.js";
 import { views } from "../modules/views.js";
 import { BindLogApp } from "./bindlogapp.js"
 import { CallbackApp } from "./callbackapp.js";
+import { NarrativeGeneratorApp } from "./narrativegeneratorapp.js";
 import {func} from "../modules/dom.js";
 
 // Apps
@@ -11,7 +12,8 @@ import {func} from "../modules/dom.js";
 const Apps = {
     BindLog: BindLogApp,
     Callbacks: CallbackApp,
-    ScheduleCallback: CallbackApp.ScheduleCallback
+    ScheduleCallback: CallbackApp.ScheduleCallback,
+    NarrativeGenerator: NarrativeGeneratorApp
 };
 
 Apps.open = app => {
