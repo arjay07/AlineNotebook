@@ -110,6 +110,12 @@
             "placeholder": "Deductible"
         },
         {
+            "label": "Your Property",
+            "id": "physicaldamage",
+            "type": "string",
+            "placeholder": "Deductible"
+        },
+        {
             "label": "Carco",
             "id": "carco",
             "type": "select",
@@ -583,13 +589,7 @@
                             "watercraftliability"
                         ],
                         [
-                            "pdlimits"
-                        ],
-                        [
-                            "collision"
-                        ],
-                        [
-                            "comprehensive"
+                            "physicaldamage"
                         ],
                         [
                             "rejected"
