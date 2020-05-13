@@ -13,6 +13,7 @@ const DynamoDB = AWS.DynamoDB;
 const DynamoDbSessionStore = require("dynamodb-store");
 const myAwsAdapter = require("./modules/lowdb-s3-adapter.js");
 const deasync = require("deasync");
+const https = require("https");
 
 const app = express();
 
@@ -359,6 +360,14 @@ if(!process.env.PORT){
 }
 
 // Start App
-app.listen(port, function(){
+
+var serverOptions = {
+    key: fs.readFileSync(__dirname+"/app/certificates/private.key"),
+    cert: fs.readFileSync(__dirname+"/app/certificates/certificate.crt")
+};
+
+var server = https.createServer(serverOptions, app);
+
+server.listen(port, function(){
     console.log("Running app at port:" + port + "...");
 });
