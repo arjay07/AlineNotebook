@@ -13,7 +13,7 @@
     "@sadorlovsky/lowdb-s3": "^1.0.1",
     "app": "^0.1.0",
     "aws": "0.0.3-2",
-    "aws-sdk": "^2.608.0",
+    "aws-sdk": "^2.814.0",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "deasync": "^0.1.19",
